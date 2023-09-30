@@ -1,0 +1,9 @@
+.idea
+target
+.gitignore
+dependency-reduced-pom.xml
+../.idea
+../deployment
+../dev
+../.gitignore
+../README.md

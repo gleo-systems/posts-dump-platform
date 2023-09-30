@@ -1,0 +1,12 @@
+### Project ###
+*dev/logs
+
+### IntelliJ IDEA ###
+.idea/*
+!.idea/runConfigurations
+*.iws
+*.iml
+*.ipr
+
+### Mac OS ###
+.DS_Store

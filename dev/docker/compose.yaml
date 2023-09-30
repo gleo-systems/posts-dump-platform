@@ -1,0 +1,31 @@
+version: "3.9"
+services:
+
+  local-pd-requests-queue:
+    container_name: "local-pd-requests-queue"
+    image: "rabbitmq:3.12.6-management-alpine"
+    volumes:
+      - "local-pd-requests-queue_vol:/var/lib/rabbitmq"
+    hostname: "local-pd-requests-queue"
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+
+  local-pd-buckets-storage:
+    container_name: "local-pd-buckets-storage"
+    image: "minio/minio:RELEASE.2023-09-23T03-47-50Z"
+    command: server --console-address ":9001" /data
+    volumes:
+      - "local-pd-buckets-storage_vol:/data"
+    hostname: "local-pd-buckets-storage"
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+
+volumes:
+  local-pd-requests-queue_vol:
+  local-pd-buckets-storage_vol:
+
+networks:
+  default:
+    name: "local-pd-platform_net"

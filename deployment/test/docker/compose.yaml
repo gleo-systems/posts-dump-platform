@@ -1,0 +1,54 @@
+version: "3.9"
+services:
+
+  pd-backend:
+    container_name: "pd-backend"
+    build: "../../../posts-dump-backend"
+    env_file: ".env"
+    volumes:
+      - "pd-backend_vol:/var/app"
+    depends_on:
+      pd-requests-queue:
+        condition: service_healthy
+      pd-buckets-storage:
+        condition: service_healthy
+
+
+  pd-requests-queue:
+    container_name: "pd-requests-queue"
+    image: "rabbitmq:3.12.6-management-alpine"
+    volumes:
+      - "pd-requests-queue_vol:/var/lib/rabbitmq"
+    hostname: "pd-requests-queue"
+    expose:
+      - "5672"
+    healthcheck:
+      test: "rabbitmq-diagnostics -q check_running"
+      start_period: 5s
+      interval: 2s
+      retries: 20
+      timeout: 5s
+
+  pd-buckets-storage:
+    container_name: "pd-buckets-storage"
+    image: "minio/minio:RELEASE.2023-09-23T03-47-50Z"
+    command: server /data
+    volumes:
+      - "pd-buckets-storage_vol:/data"
+    hostname: "pd-buckets-storage"
+    expose:
+      - "9000"
+    healthcheck:
+      test: "curl -f http://pd-buckets-storage:9000/minio/health/live || exit 1"
+      interval: 2s
+      retries: 20
+      timeout: 5s
+
+volumes:
+  pd-backend_vol:
+  pd-requests-queue_vol:
+  pd-buckets-storage_vol:
+
+networks:
+  default:
+    name: "pd-platform_net"

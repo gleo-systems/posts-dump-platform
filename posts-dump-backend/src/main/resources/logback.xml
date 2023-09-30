@@ -1,0 +1,21 @@
+<configuration>
+
+    <appender name="FILE_LOGGER" class="ch.qos.logback.core.FileAppender">
+        <file>${APP_LOGS_DIR}/posts-dump-backend.log</file>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+    <appender name="CONSOLE_LOGGER" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="software.amazon.awssdk" level="INFO" />
+
+    <root level="DEBUG">
+        <appender-ref ref="FILE_LOGGER" />
+        <appender-ref ref="CONSOLE_LOGGER" />software.amazon.awssdk.auth.credentials
+    </root>
+</configuration>

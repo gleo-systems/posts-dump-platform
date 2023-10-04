@@ -9,11 +9,11 @@ class MessageBrokerSubscriber(
     private val properties: MessageBrokerProperties,
     private val consumerFactory: MessageConsumerFactory,
 ) {
-    // TODO: handle exceptions
     fun run() {
         logger.debug { "Creating subscription with $properties" }
         val (username, password, hostName, consumerTag, channelName, autoAck) = properties
 
+        // TODO: handle exceptions
         val channel = ConnectionFactory().apply {
             this.username = username
             this.username = username

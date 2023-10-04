@@ -13,6 +13,6 @@ import pl.gleosys.postsdump.domain.Failure
 import pl.gleosys.postsdump.infrastructure.InfrastructureError
 
 fun <T> Result<T, FuelError>.toEither(): Either<Failure, T> =
-    this.fold(::Right) { Left(InfrastructureError(cause = it)) }
+    this.fold(::Right) { Left(InfrastructureError(it)) }
 
 inline fun <reified T : Any> Request.responseObject(adapter: JsonAdapter<T>) = response(moshiDeserializerOf(adapter))

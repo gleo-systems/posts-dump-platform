@@ -11,8 +11,7 @@ private enum class JSONPlaceholderAPIProperty(override val envName: String) : En
 }
 
 sealed class JSONPlaceholderAPI : FuelRouting {
-    override val basePath: String =
-        System.getenv(JSONPlaceholderAPIProperty.API_URL_PROP.envName)
+    override val basePath: String = System.getenv(JSONPlaceholderAPIProperty.API_URL_PROP.envName)
 
     class GetPosts : JSONPlaceholderAPI()
 

@@ -28,7 +28,7 @@ class JSONPlaceholderHTTPClient(mapper: Moshi) : PostsAPIClient {
                 .map { listDTO -> listDTO.map(PostDTO::toDomain) }
                 .toEither()
         }
-            .mapLeft { InfrastructureError(cause = it) }
+            .mapLeft(::InfrastructureError)
             .fold(::Left) { it }
     }
 }

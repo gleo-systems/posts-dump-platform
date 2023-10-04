@@ -2,6 +2,7 @@ package pl.gleosys.postsdump.infrastructure.storage
 
 import com.google.inject.AbstractModule
 import com.google.inject.Provides
+import com.squareup.moshi.Moshi
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.inject.Named
 import jakarta.inject.Singleton
@@ -20,7 +21,7 @@ private enum class StorageProperty(override val envName: String) : EnvironmentPr
     REGION_PROP("STORAGE_REGION"),
     ACCESS_KEY_ID_PROP("STORAGE_ACCESS_KEY_ID"),
     SECRET_ACCESS_KEY_PROP("STORAGE_SECRET_ACCESS_KEY"),
-    API_URI_PROP("STORAGE_API_URI"),
+    API_URL_PROP("STORAGE_API_URL"),
     BASE_LOCATION_PROP("STORAGE_BASE_LOCATION"),
 }
 
@@ -43,7 +44,7 @@ class StorageModule : AbstractModule() {
             System.getenv(REGION_PROP.envName),
             System.getenv(ACCESS_KEY_ID_PROP.envName),
             System.getenv(SECRET_ACCESS_KEY_PROP.envName),
-            System.getenv(API_URI_PROP.envName),
+            System.getenv(API_URL_PROP.envName),
             System.getenv(BASE_LOCATION_PROP.envName),
         )
 
@@ -68,12 +69,14 @@ class StorageModule : AbstractModule() {
     @Named("bucketsStorageClient")
     fun bucketsStorageClient(
         @Named("storageProperties") properties: StorageProperties,
-        @Named("minioServiceClient") delegate: S3Client
+        @Named("minioServiceClient") delegate: S3Client,
     ): StorageClient = BucketsStorageClient(properties, delegate)
 
     @Provides
     @Singleton
     @Named("bucketsStorageUploader")
-    fun bucketsStorageUploader(@Named("bucketsStorageClient") client: StorageClient): StorageUploader =
-        BucketsStorageUploader(client)
+    fun bucketsStorageUploader(
+        parser: Moshi,
+        @Named("bucketsStorageClient") client: StorageClient,
+    ): StorageUploader = BucketsStorageUploader(parser, client)
 }

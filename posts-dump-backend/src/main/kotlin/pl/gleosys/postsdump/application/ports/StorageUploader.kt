@@ -5,5 +5,5 @@ import pl.gleosys.postsdump.domain.Failure
 import java.nio.file.Path
 
 interface StorageUploader {
-    fun uploadFile(destination: Path, content: ByteArray): Option<Failure>
+    fun <T> uploadFile(destination: Path, content: T, clazz: Class<T>): Option<Failure>
 }

@@ -1,0 +1,13 @@
+package pl.gleosys.postsdump.application.process
+
+import pl.gleosys.postsdump.application.FileExtension
+import pl.gleosys.postsdump.domain.Event
+import pl.gleosys.postsdump.domain.Post
+import java.nio.file.Path
+
+class Path {
+    companion object {
+        fun jsonExtOf(event: Event, post: Post) =
+            Path.of(event.id.toString(), "${post.id}${FileExtension.JSON_EXT.suffix}")
+    }
+}

@@ -5,6 +5,7 @@ import com.google.inject.Provides
 import com.squareup.moshi.Moshi
 import jakarta.inject.Named
 import jakarta.inject.Singleton
+import pl.gleosys.postsdump.application.process.RunDumpProcess
 import pl.gleosys.postsdump.infrastructure.EnvironmentProperty
 import pl.gleosys.postsdump.infrastructure.messagebroker.MessageBrokerProperty.*
 import java.lang.System.getenv
@@ -36,7 +37,8 @@ class MessageBrokerModule : AbstractModule() {
     @Provides
     @Singleton
     @Named("pdRequestConsumer")
-    fun pdRequestConsumer(parser: Moshi): MessageConsumer = PDRequestConsumer(parser)
+    fun pdRequestConsumer(parser: Moshi, process: RunDumpProcess): MessageConsumer =
+        PDRequestConsumer(parser, process)
 
     @Provides
     @Singleton

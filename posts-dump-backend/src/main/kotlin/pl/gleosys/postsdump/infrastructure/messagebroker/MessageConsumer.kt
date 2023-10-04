@@ -1,4 +1,4 @@
-package pl.gleosys.postsdump.infrastructure.rabbitmq
+package pl.gleosys.postsdump.infrastructure.messagebroker
 
 import com.rabbitmq.client.AMQP
 import com.rabbitmq.client.Consumer
@@ -10,6 +10,7 @@ import java.io.IOException
  * Template class providing a link between implementation and consumer interface.
  */
 abstract class MessageConsumer : Consumer {
+    @Throws(IOException::class)
     abstract override fun handleDelivery(
         consumerTag: String,
         envelope: Envelope,

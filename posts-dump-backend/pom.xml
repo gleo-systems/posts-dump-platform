@@ -17,9 +17,12 @@
         <kotlin.compiler.languageVersion>1.9</kotlin.compiler.languageVersion>
         <kotlin.compiler.jvmTarget>17</kotlin.compiler.jvmTarget>
         <kotlin.code.style>official</kotlin.code.style>
-        <guice.version>7.0.0</guice.version>
         <rabbitmq.cli.version>5.18.0</rabbitmq.cli.version>
+        <guice.version>7.0.0</guice.version>
+        <arrow.version>1.2.1</arrow.version>
         <aws.sdk.version>2.20.153</aws.sdk.version>
+        <moshi.version>1.15.0</moshi.version>
+        <fuel.version>2.3.1</fuel.version>
     </properties>
 
     <dependencies>
@@ -33,6 +36,43 @@
             <artifactId>guice</artifactId>
             <version>${guice.version}</version>
         </dependency>
+        <dependency>
+            <groupId>io.arrow-kt</groupId>
+            <artifactId>arrow-core</artifactId>
+            <version>${arrow.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.arrow-kt</groupId>
+            <artifactId>arrow-fx-coroutines</artifactId>
+            <version>${arrow.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.kittinunf.fuel</groupId>
+            <artifactId>fuel</artifactId>
+            <version>${fuel.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.kittinunf.fuel</groupId>
+            <artifactId>fuel-moshi</artifactId>
+            <version>${fuel.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.moshi</groupId>
+            <artifactId>moshi</artifactId>
+            <version>${moshi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.moshi</groupId>
+            <artifactId>moshi-adapters</artifactId>
+            <version>${moshi.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.squareup.moshi</groupId>
+            <artifactId>moshi-kotlin-codegen</artifactId>
+            <version>${moshi.version}</version>
+            <scope>compile</scope>
+        </dependency>
+
 
         <!-- Infrastructure -->
         <dependency>
@@ -50,7 +90,6 @@
             <artifactId>url-connection-client</artifactId>
             <version>${aws.sdk.version}</version>
         </dependency>
-
 
         <!-- Logger -->
         <dependency>
@@ -93,6 +132,21 @@
                 <artifactId>kotlin-maven-plugin</artifactId>
                 <version>${kotlin.version}</version>
                 <executions>
+                    <execution>
+                        <id>kapt</id>
+                        <goals>
+                            <goal>kapt</goal>
+                        </goals>
+                        <configuration>
+                            <annotationProcessorPaths>
+                                <annotationProcessorPath>
+                                    <groupId>com.squareup.moshi</groupId>
+                                    <artifactId>moshi-kotlin-codegen</artifactId>
+                                    <version>${moshi.version}</version>
+                                </annotationProcessorPath>
+                            </annotationProcessorPaths>
+                        </configuration>
+                    </execution>
                     <execution>
                         <id>compile</id>
                         <phase>compile</phase>

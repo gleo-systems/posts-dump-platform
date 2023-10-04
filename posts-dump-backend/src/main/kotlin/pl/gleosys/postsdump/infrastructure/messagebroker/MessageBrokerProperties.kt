@@ -1,12 +1,12 @@
-package pl.gleosys.postsdump.infrastructure.rabbitmq
+package pl.gleosys.postsdump.infrastructure.messagebroker
 
-data class ConnectionProperties(
+data class MessageBrokerProperties(
     val username: String,
     val password: String,
     val hostName: String,
     val consumerTag: String,
-    val queueName: String,
-    val queueAutoAck: Boolean,
+    val channelName: String,
+    val channelAutoAck: Boolean,
 ) {
     override fun toString(): String {
         return "ConnectionProperties(" +
@@ -14,7 +14,7 @@ data class ConnectionProperties(
             "password=###, " +
             "hostName=$hostName, " +
             "consumerTag=$consumerTag, " +
-            "queueName=$queueName, " +
-            "queueAutoAck=$queueAutoAck)"
+            "channelName=$channelName, " +
+            "channelAutoAck=$channelAutoAck)"
     }
 }

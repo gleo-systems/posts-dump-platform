@@ -7,8 +7,10 @@ Message triggered dump of `https://jsonplaceholder.typicode.com` posts and comme
 * Kotlin
 * Google Guice
 * RabbitMQ
-* AWS SDK 2
+* MinIO storage / AWS SDK 2
 * Kotlin Logger/Logback
+* `TODO` Go async
+* `TODO` Arrow !
 * `TODO` Kubernetes
 * `TODO` Kafka
 
@@ -22,7 +24,7 @@ Check `.env` file.
 2. `DEPLOYMENT` Create boot scripts for queue/buckets components and change default credentials.
 3. `CONFIGURATION` Add shutdown hooks if necessary for stopping threads of: logger, rabbitmq.
 4. `DEPLOYMENT` Decrease Docker image size by using JRE instead of JDK and configure non-root Docker user.
-5. `DEPLOYMENT` Take care of maven shading warnings or switch to Gradle.
+5. `DEPLOYMENT` Switch to Gradle (take care of maven shading warnings) and from KAPT to KSP processor.
 6. `CONFIGURATION` Improve logging: format, rolling policy and decide if file logger is needed.
 
 ### Useful Links

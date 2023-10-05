@@ -3,6 +3,9 @@ package pl.gleosys.postsdump.application.process
 import arrow.core.None
 import arrow.core.Option
 import io.github.oshai.kotlinlogging.KotlinLogging
+import jakarta.inject.Inject
+import jakarta.inject.Named
+import pl.gleosys.postsdump.application.aop.LogDuration
 import pl.gleosys.postsdump.application.ports.PostsAPIClient
 import pl.gleosys.postsdump.application.ports.StorageUploader
 import pl.gleosys.postsdump.domain.Event
@@ -12,8 +15,13 @@ import java.nio.file.Path as JPath
 
 private val logger = KotlinLogging.logger {}
 
-class RunDumpProcess(private val apiClient: PostsAPIClient, private val storage: StorageUploader) {
-    fun execute(event: Event): Option<Failure> {
+// Open class for AOP :(
+open class RunDumpProcess @Inject constructor(
+    private val apiClient: PostsAPIClient,
+    @Named("bucketsStorageUploader") private val storage: StorageUploader,
+) {
+    @LogDuration
+    open fun execute(event: Event): Option<Failure> {
         logger.info { "Starting new dump process for $event" }
 
         // TODO: non-blocking

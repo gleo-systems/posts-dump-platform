@@ -1,0 +1,15 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="dev/posts-dump-backend/Dockerfile: Run" type="docker-deploy" factoryName="dockerfile" server-name="Docker">
+    <deployment type="dockerfile">
+      <settings>
+        <option name="imageTag" value="local-pd-backend" />
+        <option name="containerName" value="dev-pd-backend" />
+        <option name="contextFolderPath" value="posts-dump-backend/.." />
+        <option name="commandLineOptions" value="--env-file=posts-dump-backend/.env --network=host " />
+        <option name="showCommandPreview" value="true" />
+        <option name="sourceFilePath" value="posts-dump-backend/Dockerfile" />
+      </settings>
+    </deployment>
+    <method v="2" />
+  </configuration>
+</component>

@@ -1,0 +1,12 @@
+.gradle
+.idea
+deployment
+dev
+**/.gitattributes
+**/.gitignore
+gradle
+!gradle/libs.versions.toml
+gradlew
+gradlew.bat
+README.md
+**/build

@@ -10,6 +10,7 @@ plugins {
     kotlin("jvm")
     id("com.google.devtools.ksp")
     id("org.jlleitschuh.gradle.ktlint")
+    id("com.github.johnrengelman.shadow") version "8.1.1"
 }
 
 group = "pl.gleosys.postsdump"
@@ -55,7 +56,7 @@ application {
 
 ktlint {
     filter {
-        // Pattern '**/generated/**' does not work
+        // BUG: pattern '**/generated/**' does not work
         exclude { entry -> entry.file.toString().contains("generated") }
         include("**/kotlin/**")
     }
@@ -63,4 +64,8 @@ ktlint {
 
 tasks.named<Test>("test") {
     useJUnitPlatform()
+}
+
+tasks.withType<Jar> {
+    manifest { attributes("Main-Class" to "pl.gleosys.postsdump.MainKt") }
 }

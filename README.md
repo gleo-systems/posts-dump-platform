@@ -22,11 +22,11 @@ resources dump.
 Run following commands in project root directory (Unix OS):
 
 ```bash 
-docker compose -f ./dev/docker/compose.yaml up &
+docker compose -f ./deployment/dev/compose.yaml up &
 ```
 
 ```bash
-mvn clean package -f ./posts-dump-backend/pom.xml
+./gradlew clean build
 ```
 
 ```bash
@@ -45,7 +45,7 @@ export STORAGE_SECRET_ACCESS_KEY=minioadmin
 export STORAGE_API_URL=http://localhost:9000
 export STORAGE_BASE_LOCATION=posts
 
-java -jar -DAPP_LOGS_DIR=./dev/logs ./posts-dump-backend/target/posts-dump-backend-0.0.1-SNAPSHOT.jar
+java -jar -DAPP_LOGS_DIR=./dev/logs ./posts-dump-backend/build/libs/posts-dump-backend-0.0.1-SNAPSHOT-all.jar
 ```
 
 ## Local Environment
@@ -57,7 +57,7 @@ Spinning up local environment requires:
 * restarting service `pd-backend`.
 
 ```bash
-docker compose -f ./deployment/local/docker/compose.yaml up &
+docker compose -f ./deployment/local/compose.yaml up &
 ```
 
 ## Next Features

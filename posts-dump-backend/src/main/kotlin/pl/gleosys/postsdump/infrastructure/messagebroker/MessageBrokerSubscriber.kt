@@ -7,7 +7,7 @@ private val logger = KotlinLogging.logger {}
 
 class MessageBrokerSubscriber(
     private val properties: MessageBrokerProperties,
-    private val consumerFactory: MessageConsumerFactory,
+    private val consumerFactory: MessageConsumerFactory
 ) {
     fun run() {
         logger.debug { "Creating subscription with $properties" }
@@ -28,7 +28,7 @@ class MessageBrokerSubscriber(
             channelName,
             autoAck,
             consumerTag,
-            consumerFactory.newInstance(channel, autoAck),
+            consumerFactory.newInstance(channel, autoAck)
         )
         logger.info { "Successfully created subscription for channelName=$channelName and hostName=$hostName" }
     }

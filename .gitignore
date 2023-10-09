@@ -1,5 +1,9 @@
+### Mac OS ###
+.DS_Store
+
 ### Project ###
-*dev/logs
+dev/logs
+posts-dump-backend.log
 APP_LOGS_DIR_IS_UNDEFINED
 
 ### IntelliJ IDEA ###
@@ -9,5 +13,5 @@ APP_LOGS_DIR_IS_UNDEFINED
 *.iml
 *.ipr
 
-### Mac OS ###
-.DS_Store
+### Gradle ###
+.gradle

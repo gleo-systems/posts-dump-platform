@@ -18,7 +18,7 @@ private val logger = KotlinLogging.logger {}
 // Open class for AOP :(
 open class RunDumpProcess @Inject constructor(
     private val apiClient: PostsAPIClient,
-    @Named("bucketsStorageUploader") private val storage: StorageUploader,
+    @Named("bucketsStorageUploader") private val storage: StorageUploader
 ) {
     @LogDuration
     open fun execute(event: Event): Option<Failure> {

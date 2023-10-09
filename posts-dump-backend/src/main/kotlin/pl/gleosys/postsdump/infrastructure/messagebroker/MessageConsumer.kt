@@ -15,7 +15,7 @@ abstract class MessageConsumer : Consumer {
         consumerTag: String,
         envelope: Envelope,
         properties: AMQP.BasicProperties,
-        body: ByteArray,
+        body: ByteArray
     )
 
     final override fun handleConsumeOk(consumerTag: String) {

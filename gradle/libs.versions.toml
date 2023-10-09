@@ -1,0 +1,37 @@
+[versions]
+guiceVer = "7.0.0"
+arrowVer = "1.2.1"
+fuelVer = "2.3.1"
+moshiVer = "1.15.0"
+kotlinLoggingJVMVer = "5.1.0"
+slf4jVer = "2.0.9"
+amqpClientVer = "5.18.0"
+awsSDKVer = "2.20.153"
+logbackVer = "1.4.11"
+junitJupiterEngineVer = "5.9.3"
+
+[libraries]
+# Core
+guice = { module = "com.google.inject:guice", version.ref = "guiceVer" }
+arrowCore = { module = "io.arrow-kt:arrow-core", version.ref = "arrowVer" }
+arrowCoroutines = { module = "io.arrow-kt:arrow-fx-coroutines", version.ref = "arrowVer" }
+fuel = { module = "com.github.kittinunf.fuel:fuel", version.ref = "fuelVer" }
+fuelMoshi = { module = "com.github.kittinunf.fuel:fuel-moshi", version.ref = "fuelVer" }
+moshi = { module = "com.squareup.moshi:moshi", version.ref = "moshiVer" }
+moshiAdapters = { module = "com.squareup.moshi:moshi-adapters", version.ref = "moshiVer" }
+kotlinLoggingJVM = { module = "io.github.oshai:kotlin-logging-jvm", version.ref = "kotlinLoggingJVMVer" }
+slf4j = { module = "org.slf4j:slf4j-api", version.ref = "slf4jVer" }
+
+# Infrastructure
+amqpClient = { module = "com.rabbitmq:amqp-client", version.ref = "amqpClientVer" }
+awsSDKS3 = { module = "software.amazon.awssdk:s3", version.ref = "awsSDKVer" }
+awsSDKUrlConnectionClient = { module = "software.amazon.awssdk:url-connection-client", version.ref = "awsSDKVer" }
+logback = { module = "ch.qos.logback:logback-classic", version.ref = "logbackVer" }
+
+# Tests
+kotlinTestJunit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5" }
+junitJupiterEngine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junitJupiterEngineVer" }
+junitPlatformLauncher = { module = "org.junit.platform:junit-platform-launcher" }
+
+# Compile
+moshiKotlinCodegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshiVer" }

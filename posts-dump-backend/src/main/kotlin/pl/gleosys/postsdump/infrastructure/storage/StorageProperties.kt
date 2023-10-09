@@ -5,5 +5,5 @@ data class StorageProperties(
     val accessKeyId: String,
     val secretAccessKey: String,
     val apiURL: String,
-    val baseLocation: String,
+    val baseLocation: String
 )

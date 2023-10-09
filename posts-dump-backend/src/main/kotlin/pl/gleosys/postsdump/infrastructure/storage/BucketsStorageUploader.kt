@@ -16,7 +16,7 @@ class BucketsStorageUploader(private val parser: Moshi, private val client: Stor
         logger.debug { "Uploading content $content to destination=$destination" }
         return client.upload(
             destination,
-            parser.adapter(clazz).toJson(content).toByteArray(),
+            parser.adapter(clazz).toJson(content).toByteArray()
         )
             .onNone { logger.info { "Successfully uploaded content to destination=$destination" } }
     }

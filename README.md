@@ -1,6 +1,7 @@
 ## Project Description
 
-Message driven platform implementing process for `https://jsonplaceholder.typicode.com` REST resources dump.
+Message driven platform implementing process for `https://jsonplaceholder.typicode.com` REST
+resources dump.
 
 ## Tech Stack
 
@@ -11,7 +12,7 @@ Message driven platform implementing process for `https://jsonplaceholder.typico
 * MinIO storage / AWS SDK 2
 * Fuel http client / Moshi JSON
 * Kotlin Logger / Logback
-* Maven v3.9.3
+* Gradle v8.4 (Wrapper)
 * Docker v23.0.5 / Compose v2.17.3
 * `TODO` Kubernetes
 * `TODO` Kafka
@@ -44,28 +45,31 @@ export STORAGE_SECRET_ACCESS_KEY=minioadmin
 export STORAGE_API_URL=http://localhost:9000
 export STORAGE_BASE_LOCATION=posts
 
-java -jar ./posts-dump-backend/target/posts-dump-backend-0.0.1-SNAPSHOT.jar -DAPP_LOGS_DIR=./dev/logs
+java -jar -DAPP_LOGS_DIR=./dev/logs ./posts-dump-backend/target/posts-dump-backend-0.0.1-SNAPSHOT.jar
 ```
 
-## Testing Environment
+## Local Environment
 
-Spinning up testing environment requires:
+Spinning up local environment requires:
 
 * creating RabbitMQ queue `pd-requests`,
 * creating Minio bucket `posts`,
 * restarting service `pd-backend`.
 
 ```bash
-docker compose -f ./deployment/test/docker/compose.yaml up &
+docker compose -f ./deployment/local/docker/compose.yaml up &
 ```
 
 ## Next Features
 
 1. `ARCHITECTURE` Apply Coroutines.
 2. `DEPLOYMENT` Create boot scripts for queue/buckets components and change TEST env credentials.
-3. `CONFIGURATION` Add shutdown hooks for stopping threads/closing resources from e.g. logger, rabbitmq.
-4. `DEPLOYMENT` Decrease Docker image size by using JRE instead of JDK and configure non-root Docker user.
-5. `DEPLOYMENT` Switch to Gradle (take care of maven shading warnings) and switch from KAPT to KSP processor.
+3. `CONFIGURATION` Add shutdown hooks for stopping threads/closing resources from e.g. logger,
+   rabbitmq.
+4. `DEPLOYMENT` Decrease Docker image size by using JRE instead of JDK and configure non-root Docker
+   user.
+5. `DEPLOYMENT` Switch to Gradle (take care of maven shading warnings) and switch from KAPT to KSP
+   processor.
 6. `CONFIGURATION` Improve logging: format, rolling policy and decide if file logger is needed.
 7. `CONFIGURATION` Workers fine tuning for message broker.
 

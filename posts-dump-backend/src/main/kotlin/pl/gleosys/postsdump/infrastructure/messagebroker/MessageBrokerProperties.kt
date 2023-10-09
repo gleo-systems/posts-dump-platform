@@ -6,7 +6,7 @@ data class MessageBrokerProperties(
     val hostName: String,
     val consumerTag: String,
     val channelName: String,
-    val channelAutoAck: Boolean,
+    val channelAutoAck: Boolean
 ) {
     override fun toString(): String {
         return "ConnectionProperties(" +

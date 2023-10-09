@@ -8,7 +8,7 @@ import pl.gleosys.postsdump.infrastructure.messagebroker.MessageBrokerSubscriber
 private val logger = KotlinLogging.logger {}
 
 class InfrastructureInitializer @Inject constructor(
-    @Named("pdRequestBrokerSubscriber") private val messageBrokerSubscriber: MessageBrokerSubscriber,
+    @Named("pdRequestBrokerSubscriber") private val messageBrokerSubscriber: MessageBrokerSubscriber
 ) {
     fun run() {
         logger.info { "Initializing infrastructure components..." }

@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="test/compose.yaml: Run" type="docker-deploy" factoryName="docker-compose.yml" server-name="Docker">
+  <configuration default="false" name="dev/compose.yaml: Run" type="docker-deploy" factoryName="docker-compose.yml" server-name="Docker">
     <deployment type="docker-compose.yml">
       <settings>
         <option name="envFilePath" value="" />
-        <option name="sourceFilePath" value="deployment/test/docker/compose.yaml" />
+        <option name="sourceFilePath" value="dev/docker/compose.yaml" />
       </settings>
     </deployment>
     <method v="2" />

@@ -12,7 +12,7 @@ import java.nio.file.Path
 
 class BucketsStorageClient(
     private val properties: StorageProperties,
-    private val delegate: S3Client,
+    private val delegate: S3Client
 ) : StorageClient {
     override fun upload(destination: Path, content: ByteArray): Option<Failure> {
         return catch {
@@ -21,7 +21,7 @@ class BucketsStorageClient(
                     .bucket(properties.baseLocation)
                     .key(destination.toString())
                     .build(),
-                RequestBody.fromBytes(content),
+                RequestBody.fromBytes(content)
             )
         }
             .fold({ Option.invoke(InfrastructureError(cause = it)) }, { None })

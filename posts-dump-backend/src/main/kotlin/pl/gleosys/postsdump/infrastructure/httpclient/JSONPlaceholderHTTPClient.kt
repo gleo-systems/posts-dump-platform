@@ -16,7 +16,7 @@ private class JSONPlaceholderAdapter
 
 class JSONPlaceholderHTTPClient(mapper: Moshi) : PostsAPIClient {
     private val getPostsAdapter = mapper.adapter<List<PostDTO>>(
-        Types.newParameterizedType(List::class.java, PostDTO::class.java),
+        Types.newParameterizedType(List::class.java, PostDTO::class.java)
     )
 
     // TODO: non-blocking

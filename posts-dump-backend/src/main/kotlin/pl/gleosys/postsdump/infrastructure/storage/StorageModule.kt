@@ -8,7 +8,11 @@ import jakarta.inject.Named
 import jakarta.inject.Singleton
 import pl.gleosys.postsdump.application.ports.StorageUploader
 import pl.gleosys.postsdump.infrastructure.EnvironmentProperty
-import pl.gleosys.postsdump.infrastructure.storage.StorageProperty.*
+import pl.gleosys.postsdump.infrastructure.storage.StorageProperty.ACCESS_KEY_ID_PROP
+import pl.gleosys.postsdump.infrastructure.storage.StorageProperty.API_URL_PROP
+import pl.gleosys.postsdump.infrastructure.storage.StorageProperty.BASE_LOCATION_PROP
+import pl.gleosys.postsdump.infrastructure.storage.StorageProperty.REGION_PROP
+import pl.gleosys.postsdump.infrastructure.storage.StorageProperty.SECRET_ACCESS_KEY_PROP
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials
 import software.amazon.awssdk.http.urlconnection.UrlConnectionHttpClient
 import software.amazon.awssdk.regions.Region
@@ -22,7 +26,7 @@ private enum class StorageProperty(override val envName: String) : EnvironmentPr
     ACCESS_KEY_ID_PROP("STORAGE_ACCESS_KEY_ID"),
     SECRET_ACCESS_KEY_PROP("STORAGE_SECRET_ACCESS_KEY"),
     API_URL_PROP("STORAGE_API_URL"),
-    BASE_LOCATION_PROP("STORAGE_BASE_LOCATION"),
+    BASE_LOCATION_PROP("STORAGE_BASE_LOCATION")
 }
 
 /**
@@ -30,7 +34,8 @@ private enum class StorageProperty(override val envName: String) : EnvironmentPr
  *
  * Utilizes autoconfiguration feature of AWS SDK library.
  *
- * @see <a href="https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/using.html">Use the AWS SDK for Java 2.x</a>
+ * @see <a href="https://docs.aws.amazon.com/sdk-for-java/latest/developer-guide/using.html">
+ *     Use the AWS SDK for Java 2.x</a>
  * @see software.amazon.awssdk.auth.credentials.DefaultCredentialsProvider
  * @see software.amazon.awssdk.regions.providers.SystemSettingsRegionProvider
  */
@@ -45,7 +50,7 @@ class StorageModule : AbstractModule() {
             System.getenv(ACCESS_KEY_ID_PROP.envName),
             System.getenv(SECRET_ACCESS_KEY_PROP.envName),
             System.getenv(API_URL_PROP.envName),
-            System.getenv(BASE_LOCATION_PROP.envName),
+            System.getenv(BASE_LOCATION_PROP.envName)
         )
 
     @Provides
@@ -69,7 +74,7 @@ class StorageModule : AbstractModule() {
     @Named("bucketsStorageClient")
     fun bucketsStorageClient(
         @Named("storageProperties") properties: StorageProperties,
-        @Named("minioServiceClient") delegate: S3Client,
+        @Named("minioServiceClient") delegate: S3Client
     ): StorageClient = BucketsStorageClient(properties, delegate)
 
     @Provides
@@ -77,6 +82,6 @@ class StorageModule : AbstractModule() {
     @Named("bucketsStorageUploader")
     fun bucketsStorageUploader(
         parser: Moshi,
-        @Named("bucketsStorageClient") client: StorageClient,
+        @Named("bucketsStorageClient") client: StorageClient
     ): StorageUploader = BucketsStorageUploader(parser, client)
 }

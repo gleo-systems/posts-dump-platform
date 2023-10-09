@@ -1,9 +1,9 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="posts-dump-backend: Run LOCAL" type="JetRunConfigurationType">
+  <configuration default="false" name="MainKt: Run" type="JetRunConfigurationType">
     <option name="MAIN_CLASS_NAME" value="pl.gleosys.postsdump.MainKt" />
-    <module name="posts-dump-backend" />
+    <module name="posts-dump-platform.posts-dump-backend.main" />
     <shortenClasspath name="NONE" />
-    <option name="VM_PARAMETERS" value="--add-opens=java.base/java.lang=ALL-UNNAMED --add-opens=java.base/java.io=ALL-UNNAMED -DAPP_LOGS_DIR=./dev/logs" />
+    <option name="VM_PARAMETERS" value="-DAPP_LOGS_DIR=dev/logs" />
     <extension name="net.ashald.envfile">
       <option name="IS_ENABLED" value="true" />
       <option name="IS_SUBST" value="false" />

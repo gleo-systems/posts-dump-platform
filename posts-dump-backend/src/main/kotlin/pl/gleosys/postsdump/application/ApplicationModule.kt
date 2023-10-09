@@ -12,7 +12,7 @@ class ApplicationModule : AbstractModule() {
         bindInterceptor(
             Matchers.any(),
             Matchers.annotatedWith(LogDuration::class.java),
-            LogDurationInterceptor(),
+            LogDurationInterceptor()
         )
         bind(RunDumpProcess::class.java).`in`(Scopes.SINGLETON)
     }

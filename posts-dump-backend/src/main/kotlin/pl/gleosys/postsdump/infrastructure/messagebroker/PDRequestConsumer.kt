@@ -21,7 +21,7 @@ class PDRequestConsumer(private val parser: Moshi, private val process: RunDumpP
         consumerTag: String,
         envelope: Envelope,
         properties: AMQP.BasicProperties,
-        body: ByteArray,
+        body: ByteArray
     ) {
         logger.debug { "Handling delivery with $properties and body=${String(body).removeWhitespaceChars()}" }
 

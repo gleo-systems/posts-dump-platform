@@ -1,6 +1,10 @@
 package pl.gleosys.postsdump.infrastructure.messagebroker
 
-import com.rabbitmq.client.*
+import com.rabbitmq.client.AMQP
+import com.rabbitmq.client.Channel
+import com.rabbitmq.client.Consumer
+import com.rabbitmq.client.DefaultConsumer
+import com.rabbitmq.client.Envelope
 
 class MessageConsumerFactory(private val delegate: MessageConsumer) {
     fun newInstance(channel: Channel, autoAck: Boolean): Consumer {
@@ -9,7 +13,7 @@ class MessageConsumerFactory(private val delegate: MessageConsumer) {
                 consumerTag: String,
                 envelope: Envelope,
                 properties: AMQP.BasicProperties,
-                body: ByteArray,
+                body: ByteArray
             ) {
                 delegate.handleDelivery(consumerTag, envelope, properties, body)
                 if (!autoAck) this.channel.basicAck(envelope.deliveryTag, false)

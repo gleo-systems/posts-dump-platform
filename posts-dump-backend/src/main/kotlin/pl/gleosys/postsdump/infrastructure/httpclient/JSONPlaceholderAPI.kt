@@ -7,7 +7,7 @@ import com.github.kittinunf.fuel.util.FuelRouting
 import pl.gleosys.postsdump.infrastructure.EnvironmentProperty
 
 private enum class JSONPlaceholderAPIProperty(override val envName: String) : EnvironmentProperty {
-    API_URL_PROP("JSON_PLACEHOLDER_API_URL"),
+    API_URL_PROP("JSON_PLACEHOLDER_API_URL")
 }
 
 sealed class JSONPlaceholderAPI : FuelRouting {

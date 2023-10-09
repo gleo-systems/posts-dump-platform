@@ -7,7 +7,12 @@ import jakarta.inject.Named
 import jakarta.inject.Singleton
 import pl.gleosys.postsdump.application.process.RunDumpProcess
 import pl.gleosys.postsdump.infrastructure.EnvironmentProperty
-import pl.gleosys.postsdump.infrastructure.messagebroker.MessageBrokerProperty.*
+import pl.gleosys.postsdump.infrastructure.messagebroker.MessageBrokerProperty.CHANNEL_AUTOACK_PROP
+import pl.gleosys.postsdump.infrastructure.messagebroker.MessageBrokerProperty.CHANNEL_NAME_PROP
+import pl.gleosys.postsdump.infrastructure.messagebroker.MessageBrokerProperty.CONSUMER_TAG_PROP
+import pl.gleosys.postsdump.infrastructure.messagebroker.MessageBrokerProperty.HOSTNAME_PROP
+import pl.gleosys.postsdump.infrastructure.messagebroker.MessageBrokerProperty.PASSWORD_PROP
+import pl.gleosys.postsdump.infrastructure.messagebroker.MessageBrokerProperty.USERNAME_PROP
 import java.lang.System.getenv
 
 private enum class MessageBrokerProperty(override val envName: String) : EnvironmentProperty {
@@ -16,7 +21,7 @@ private enum class MessageBrokerProperty(override val envName: String) : Environ
     HOSTNAME_PROP("MESSAGE_BROKER_HOSTNAME"),
     CONSUMER_TAG_PROP("MESSAGE_BROKER_CONSUMER_TAG"),
     CHANNEL_NAME_PROP("MESSAGE_BROKER_CHANNEL_NAME"),
-    CHANNEL_AUTOACK_PROP("MESSAGE_BROKER_CHANNEL_AUTOACK"),
+    CHANNEL_AUTOACK_PROP("MESSAGE_BROKER_CHANNEL_AUTOACK")
 }
 
 class MessageBrokerModule : AbstractModule() {
@@ -31,7 +36,7 @@ class MessageBrokerModule : AbstractModule() {
             getenv(HOSTNAME_PROP.envName),
             getenv(CONSUMER_TAG_PROP.envName),
             getenv(CHANNEL_NAME_PROP.envName),
-            getenv(CHANNEL_AUTOACK_PROP.envName).toBooleanStrict(),
+            getenv(CHANNEL_AUTOACK_PROP.envName).toBooleanStrict()
         )
 
     @Provides
@@ -50,6 +55,6 @@ class MessageBrokerModule : AbstractModule() {
     @Named("pdRequestBrokerSubscriber")
     fun pdRequestBrokerSubscriber(
         factory: MessageConsumerFactory,
-        @Named("pdRequestBrokerProperties") properties: MessageBrokerProperties,
+        @Named("pdRequestBrokerProperties") properties: MessageBrokerProperties
     ): MessageBrokerSubscriber = MessageBrokerSubscriber(properties, factory)
 }

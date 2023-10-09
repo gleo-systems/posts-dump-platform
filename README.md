@@ -10,7 +10,7 @@ resources dump.
 * Google Guice
 * RabbitMQ
 * MinIO storage / AWS SDK 2
-* Fuel http client / Moshi JSON
+* Fuel HTTP client / Moshi JSON
 * Kotlin Logger / Logback
 * Gradle v8.4 (Wrapper)
 * Docker v23.0.5 / Compose v2.17.3
@@ -63,15 +63,11 @@ docker compose -f ./deployment/local/compose.yaml up &
 ## Next Features
 
 1. `ARCHITECTURE` Apply Coroutines.
-2. `DEPLOYMENT` Create boot scripts for queue/buckets components and change TEST env credentials.
+2. `DEPLOYMENT` Create boot scripts for queue/buckets components.
 3. `CONFIGURATION` Add shutdown hooks for stopping threads/closing resources from e.g. logger,
    rabbitmq.
-4. `DEPLOYMENT` Decrease Docker image size by using JRE instead of JDK and configure non-root Docker
-   user.
-5. `DEPLOYMENT` Switch to Gradle (take care of maven shading warnings) and switch from KAPT to KSP
-   processor.
-6. `CONFIGURATION` Improve logging: format, rolling policy and decide if file logger is needed.
-7. `CONFIGURATION` Workers fine tuning for message broker.
+4. `DEPLOYMENT` Decrease Docker image size by using JRE instead of JDK.
+5. `CONFIGURATION` Workers fine tuning for message broker.
 
 ### Useful Links
 

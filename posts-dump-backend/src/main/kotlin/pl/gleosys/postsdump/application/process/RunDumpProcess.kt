@@ -15,7 +15,7 @@ import java.nio.file.Path as JPath
 
 private val logger = KotlinLogging.logger {}
 
-// Open class for AOP :(
+// Open class and @Inject are required for AOP :(
 open class RunDumpProcess @Inject constructor(
     private val apiClient: PostsAPIClient,
     @Named("bucketsStorageUploader") private val storage: StorageUploader

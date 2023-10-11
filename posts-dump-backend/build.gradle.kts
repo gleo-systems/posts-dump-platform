@@ -39,10 +39,11 @@ dependencies {
     implementation(libs.logback)
 
     /* Tests */
-    testImplementation(libs.kotlinTestJunit5)
-    testImplementation(libs.junitJupiterEngine)
-    testRuntimeOnly(libs.junitPlatformLauncher)
+    testImplementation(libs.kotestRunnerJUnit5JVM)
+    testImplementation(libs.kotestDatatestJVM)
+    testImplementation(libs.mockk)
 
+    /* Code generation */
     ksp(libs.moshiKotlinCodegen)
 }
 
@@ -56,13 +57,13 @@ application {
 
 ktlint {
     filter {
-        // BUG: pattern '**/generated/**' does not work
-        exclude { entry -> entry.file.toString().contains("generated") }
+        // BUGFIX: pattern '**/generated/**' does not work
+        exclude { it.file.toString().contains("generated") }
         include("**/kotlin/**")
     }
 }
 
-tasks.named<Test>("test") {
+tasks.withType<Test>().configureEach {
     useJUnitPlatform()
 }
 

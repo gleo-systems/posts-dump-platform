@@ -8,7 +8,8 @@ slf4jVer = "2.0.9"
 amqpClientVer = "5.18.0"
 awsSDKVer = "2.20.153"
 logbackVer = "1.4.11"
-junitJupiterEngineVer = "5.9.3"
+kotestVer = "5.7.2"
+mockkVer = "1.13.8"
 
 [libraries]
 # Core
@@ -29,9 +30,9 @@ awsSDKUrlConnectionClient = { module = "software.amazon.awssdk:url-connection-cl
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logbackVer" }
 
 # Tests
-kotlinTestJunit5 = { module = "org.jetbrains.kotlin:kotlin-test-junit5" }
-junitJupiterEngine = { module = "org.junit.jupiter:junit-jupiter-engine", version.ref = "junitJupiterEngineVer" }
-junitPlatformLauncher = { module = "org.junit.platform:junit-platform-launcher" }
+kotestRunnerJUnit5JVM = { module = "io.kotest:kotest-runner-junit5-jvm", version.ref = "kotestVer" }
+kotestDatatestJVM = { module = "io.kotest:kotest-framework-datatest-jvm", version.ref = "kotestVer" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockkVer" }
 
 # Compile
 moshiKotlinCodegen = { module = "com.squareup.moshi:moshi-kotlin-codegen", version.ref = "moshiVer" }

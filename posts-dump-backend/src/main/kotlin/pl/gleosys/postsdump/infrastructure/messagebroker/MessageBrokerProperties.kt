@@ -8,13 +8,12 @@ data class MessageBrokerProperties(
     val channelName: String,
     val channelAutoAck: Boolean
 ) {
-    override fun toString(): String {
-        return "ConnectionProperties(" +
+    override fun toString() =
+        "ConnectionProperties(" +
             "username=$username, " +
             "password=###, " +
             "hostName=$hostName, " +
             "consumerTag=$consumerTag, " +
             "channelName=$channelName, " +
             "channelAutoAck=$channelAutoAck)"
-    }
 }

@@ -12,18 +12,23 @@ resources dump.
 * MinIO storage / AWS SDK 2
 * Fuel HTTP client / Moshi JSON
 * Kotlin Logger / Logback
+* Kotest / Mockk / BDD
 * Gradle v8.4 (Wrapper)
 * Docker v23.0.5 / Compose v2.17.3
 * `TODO` Kubernetes
 * `TODO` Kafka
+* `TODO` Kotest BDD / Spock tests
 
 ## Run Application
 
-Run following commands in project root directory (Unix OS):
+Run following commands in project root directory:
 
 ```bash 
 docker compose -f ./deployment/dev/compose.yaml up &
 ```
+
+* Create RabbitMQ queue named `pd-requests` [(link)](http://localhost:15672).
+* Create Minio bucket named `posts` [(link)](http://localhost:9001).
 
 ```bash
 ./gradlew clean build
@@ -48,13 +53,19 @@ export STORAGE_BASE_LOCATION=posts
 java -jar -DAPP_LOGS_DIR=./dev/logs ./posts-dump-backend/build/libs/posts-dump-backend-0.0.1-SNAPSHOT-all.jar
 ```
 
+Optionally, build `posts-dump-backend` image from project root:
+
+```bash
+docker build -f posts-dump-backend/Dockerfile . -t dev-pd-backend
+```
+
+```bash
+docker run --env-file posts-dump-backend/.env --network host dev-pd-backend
+```
+
 ## Local Environment
 
-Spinning up local environment requires:
-
-* creating RabbitMQ queue `pd-requests`,
-* creating Minio bucket `posts`,
-* restarting service `pd-backend`.
+Spinning up local environment requires creating resources and restarting `pd-backend` service.
 
 ```bash
 docker compose -f ./deployment/local/compose.yaml up &

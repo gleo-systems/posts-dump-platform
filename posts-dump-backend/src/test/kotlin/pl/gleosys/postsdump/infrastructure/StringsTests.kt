@@ -1,0 +1,35 @@
+package pl.gleosys.postsdump.infrastructure
+
+import io.kotest.assertions.throwables.shouldThrowExactly
+import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.datatest.withData
+import io.kotest.matchers.equals.shouldBeEqual
+
+class StringsTests : BehaviorSpec({
+    given("single text value and whitespace characters to be removed") {
+
+        `when`("passing null value") {
+            then("throw null pointer exception") {
+                val text: String? = null
+                shouldThrowExactly<java.lang.NullPointerException> {
+                    text!!.removeWhitespaceChars()
+                }
+            }
+        }
+
+        `when`("passing value from data set") {
+            withData(
+                nameFn = { "Then: return text without whitespace characters" },
+                listOf(
+                    Pair("", ""),
+                    Pair("  ", ""),
+                    Pair("a b", "ab"),
+                    Pair(" a \n  \n\r \t \u000c b ", "ab")
+                )
+            ) {
+                val (text, expected) = it
+                text.removeWhitespaceChars() shouldBeEqual expected
+            }
+        }
+    }
+})

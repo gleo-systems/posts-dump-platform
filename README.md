@@ -17,7 +17,7 @@ resources dump.
 * Docker v23.0.5 / Compose v2.17.3
 * `TODO` Kubernetes
 * `TODO` Kafka
-* `TODO` Kotest BDD / Spock tests
+* `TODO` Spock tests
 
 ## Run Application
 

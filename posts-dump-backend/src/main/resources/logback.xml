@@ -12,10 +12,10 @@
         </encoder>
     </appender>
 
-    <logger name="software.amazon.awssdk" level="INFO" />
+    <logger name="software.amazon.awssdk" level="INFO"/>
 
     <root level="DEBUG">
-        <appender-ref ref="FILE_LOGGER" />
-        <appender-ref ref="CONSOLE_LOGGER" />software.amazon.awssdk.auth.credentials
+        <appender-ref ref="FILE_LOGGER"/>
+        <appender-ref ref="CONSOLE_LOGGER"/>
     </root>
 </configuration>

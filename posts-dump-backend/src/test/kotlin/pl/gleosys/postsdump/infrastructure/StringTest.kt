@@ -5,7 +5,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.datatest.withData
 import io.kotest.matchers.equals.shouldBeEqual
 
-class StringsTests : BehaviorSpec({
+class StringTest : BehaviorSpec({
     given("single text value and whitespace characters to be removed") {
 
         `when`("passing null value") {
@@ -24,7 +24,7 @@ class StringsTests : BehaviorSpec({
                     Pair("", ""),
                     Pair("  ", ""),
                     Pair("a b", "ab"),
-                    Pair(" a \n  \n\r \t \u000c b ", "ab")
+                    Pair(" a \n  \n\n\r\r - \t\t \u000c b ", "a-b")
                 )
             ) {
                 val (text, expected) = it

@@ -24,6 +24,6 @@ class BucketsStorageClient(
                 RequestBody.fromBytes(content)
             )
         }
-            .fold({ Option.invoke(InfrastructureError(cause = it)) }, { None })
+            .fold({ Option.invoke(InfrastructureError(it, it.message)) }, { None })
     }
 }

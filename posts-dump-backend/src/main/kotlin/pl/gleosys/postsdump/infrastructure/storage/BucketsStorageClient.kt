@@ -1,10 +1,11 @@
 package pl.gleosys.postsdump.infrastructure.storage
 
+import arrow.core.Either
 import arrow.core.Either.Companion.catch
-import arrow.core.None
-import arrow.core.Option
-import pl.gleosys.postsdump.domain.Failure
-import pl.gleosys.postsdump.infrastructure.InfrastructureError
+import pl.gleosys.postsdump.core.Failure
+import pl.gleosys.postsdump.core.Failure.FailureFactory
+import pl.gleosys.postsdump.core.Failure.InfrastructureError
+import pl.gleosys.postsdump.core.Success
 import software.amazon.awssdk.core.sync.RequestBody
 import software.amazon.awssdk.services.s3.S3Client
 import software.amazon.awssdk.services.s3.model.PutObjectRequest
@@ -14,8 +15,11 @@ class BucketsStorageClient(
     private val properties: StorageProperties,
     private val delegate: S3Client
 ) : StorageClient {
-    override fun upload(destination: Path, content: ByteArray): Option<Failure> {
+    // TODO: apply suspend
+    override fun upload(destination: Path, content: ByteArray): Either<Failure, Success> {
         return catch {
+            require(destination.toString().isNotBlank())
+            require(content.isNotEmpty())
             delegate.putObject(
                 PutObjectRequest.builder()
                     .bucket(properties.baseLocation)
@@ -24,6 +28,7 @@ class BucketsStorageClient(
                 RequestBody.fromBytes(content)
             )
         }
-            .fold({ Option.invoke(InfrastructureError(it, it.message)) }, { None })
+            .mapLeft<InfrastructureError>(FailureFactory::newInstance)
+            .map { Success }
     }
 }

@@ -19,16 +19,21 @@ sealed class JSONPlaceholderAPI : FuelRouting {
         get() = when (this) {
             is GetPosts -> Method.GET
         }
+
     override val path: String
         get() = when (this) {
             is GetPosts -> "/posts"
         }
+
     override val params: Parameters?
         get() = null
+
     override val headers: Map<String, HeaderValues>?
         get() = null
+
     override val bytes: ByteArray?
         get() = null
+
     override val body: String?
         get() = null
 }

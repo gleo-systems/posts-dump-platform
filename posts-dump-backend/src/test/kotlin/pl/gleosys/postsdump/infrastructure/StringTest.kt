@@ -4,6 +4,7 @@ import io.kotest.assertions.throwables.shouldThrowExactly
 import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.datatest.withData
 import io.kotest.matchers.equals.shouldBeEqual
+import pl.gleosys.postsdump.core.removeWhitespaceChars
 
 class StringTest : BehaviorSpec({
     given("single text value and whitespace characters to be removed") {
@@ -19,7 +20,7 @@ class StringTest : BehaviorSpec({
 
         `when`("passing value from data set") {
             withData(
-                nameFn = { "Then: return text without whitespace characters" },
+                nameFn = { "Then: return '${it.second}' value for text '${it.first}'" },
                 listOf(
                     Pair("", ""),
                     Pair("  ", ""),

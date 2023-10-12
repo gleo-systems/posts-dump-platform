@@ -2,12 +2,14 @@ package pl.gleosys.postsdump.infrastructure.storage
 
 import com.google.inject.AbstractModule
 import com.google.inject.Provides
-import com.squareup.moshi.Moshi
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.inject.Named
 import jakarta.inject.Singleton
 import pl.gleosys.postsdump.application.ports.StorageUploader
+import pl.gleosys.postsdump.core.Failure
+import pl.gleosys.postsdump.core.InitializationError
 import pl.gleosys.postsdump.infrastructure.EnvironmentProperty
+import pl.gleosys.postsdump.infrastructure.JSONParser
 import pl.gleosys.postsdump.infrastructure.storage.StorageProperty.ACCESS_KEY_ID_PROP
 import pl.gleosys.postsdump.infrastructure.storage.StorageProperty.API_URL_PROP
 import pl.gleosys.postsdump.infrastructure.storage.StorageProperty.BASE_LOCATION_PROP
@@ -43,7 +45,6 @@ class StorageModule : AbstractModule() {
 
     @Provides
     @Singleton
-    @Named("storageProperties")
     fun storageProperties(): StorageProperties =
         StorageProperties(
             System.getenv(REGION_PROP.envName),
@@ -52,11 +53,14 @@ class StorageModule : AbstractModule() {
             System.getenv(API_URL_PROP.envName),
             System.getenv(BASE_LOCATION_PROP.envName)
         )
+            .mapLeft(Failure::toThrowable)
+            .onLeft { throw InitializationError(it) }
+            .getOrNull()!!
 
     @Provides
     @Singleton
     @Named("minioServiceClient")
-    fun minioServiceClient(@Named("storageProperties") properties: StorageProperties): S3Client {
+    fun minioServiceClient(properties: StorageProperties): S3Client {
         logger.debug { "Creating buckets storage HTTP client with $properties" }
         val (region, accessKeyId, secretAccessKey, apiURL) = properties
         val bucketInHostnameDisabled = true
@@ -73,7 +77,7 @@ class StorageModule : AbstractModule() {
     @Singleton
     @Named("bucketsStorageClient")
     fun bucketsStorageClient(
-        @Named("storageProperties") properties: StorageProperties,
+        properties: StorageProperties,
         @Named("minioServiceClient") delegate: S3Client
     ): StorageClient = BucketsStorageClient(properties, delegate)
 
@@ -81,7 +85,7 @@ class StorageModule : AbstractModule() {
     @Singleton
     @Named("bucketsStorageUploader")
     fun bucketsStorageUploader(
-        parser: Moshi,
+        parser: JSONParser,
         @Named("bucketsStorageClient") client: StorageClient
     ): StorageUploader = BucketsStorageUploader(parser, client)
 }

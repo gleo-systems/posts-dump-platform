@@ -1,9 +1,10 @@
 package pl.gleosys.postsdump.application.ports
 
-import arrow.core.Option
-import pl.gleosys.postsdump.domain.Failure
+import arrow.core.Either
+import pl.gleosys.postsdump.core.Failure
+import pl.gleosys.postsdump.core.Success
 import java.nio.file.Path
 
 interface StorageUploader {
-    fun <T> uploadFile(destination: Path, content: T, clazz: Class<T>): Option<Failure>
+    fun <T> uploadFile(destination: Path, content: T, clazz: Class<T>): Either<Failure, Success>
 }

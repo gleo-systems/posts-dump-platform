@@ -1,11 +1,14 @@
 package pl.gleosys.postsdump.application
 
 import com.google.inject.AbstractModule
+import com.google.inject.Provides
 import com.google.inject.Scopes
 import com.google.inject.matcher.Matchers
-import pl.gleosys.postsdump.application.aop.LogDuration
-import pl.gleosys.postsdump.application.aop.LogDurationInterceptor
+import jakarta.inject.Singleton
 import pl.gleosys.postsdump.application.process.RunDumpProcess
+import pl.gleosys.postsdump.application.process.RunDumpProcessCommand
+import pl.gleosys.postsdump.core.aop.LogDuration
+import pl.gleosys.postsdump.core.aop.LogDurationInterceptor
 
 class ApplicationModule : AbstractModule() {
     override fun configure() {
@@ -16,4 +19,8 @@ class ApplicationModule : AbstractModule() {
         )
         bind(RunDumpProcess::class.java).`in`(Scopes.SINGLETON)
     }
+
+    @Provides
+    @Singleton
+    fun runDumpProcessCommand(process: RunDumpProcess) = RunDumpProcessCommand(process)
 }

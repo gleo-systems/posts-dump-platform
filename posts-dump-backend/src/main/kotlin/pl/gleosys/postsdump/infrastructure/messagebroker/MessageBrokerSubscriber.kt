@@ -11,7 +11,7 @@ class MessageBrokerSubscriber(
 ) {
     fun run() {
         logger.debug { "Creating subscription with $properties" }
-        val (username, password, hostName, consumerTag, channelName, autoAck) = properties
+        val (username, password, hostName, consumerTag, channelName, autoACK) = properties
 
         // TODO: handle exceptions
         val channel = ConnectionFactory().apply {
@@ -26,9 +26,9 @@ class MessageBrokerSubscriber(
 
         channel.basicConsume(
             channelName,
-            autoAck,
+            autoACK,
             consumerTag,
-            consumerFactory.newInstance(channel, autoAck)
+            consumerFactory.newInstance(channel, autoACK)
         )
         logger.info { "Successfully created subscription for channelName=$channelName and hostName=$hostName" }
     }

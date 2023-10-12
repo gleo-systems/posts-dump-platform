@@ -2,11 +2,13 @@ package pl.gleosys.postsdump.infrastructure.messagebroker
 
 import com.google.inject.AbstractModule
 import com.google.inject.Provides
-import com.squareup.moshi.Moshi
 import jakarta.inject.Named
 import jakarta.inject.Singleton
-import pl.gleosys.postsdump.application.process.RunDumpProcess
+import pl.gleosys.postsdump.application.process.RunDumpProcessCommand
+import pl.gleosys.postsdump.core.Failure
+import pl.gleosys.postsdump.core.InitializationError
 import pl.gleosys.postsdump.infrastructure.EnvironmentProperty
+import pl.gleosys.postsdump.infrastructure.JSONParser
 import pl.gleosys.postsdump.infrastructure.messagebroker.MessageBrokerProperty.CHANNEL_AUTOACK_PROP
 import pl.gleosys.postsdump.infrastructure.messagebroker.MessageBrokerProperty.CHANNEL_NAME_PROP
 import pl.gleosys.postsdump.infrastructure.messagebroker.MessageBrokerProperty.CONSUMER_TAG_PROP
@@ -38,23 +40,23 @@ class MessageBrokerModule : AbstractModule() {
             getenv(CHANNEL_NAME_PROP.envName),
             getenv(CHANNEL_AUTOACK_PROP.envName).toBooleanStrict()
         )
+            .mapLeft(Failure::toThrowable)
+            .onLeft { throw InitializationError(it) }
+            .getOrNull()!!
 
     @Provides
     @Singleton
-    @Named("pdRequestConsumer")
-    fun pdRequestConsumer(parser: Moshi, process: RunDumpProcess): MessageConsumer =
-        PDRequestConsumer(parser, process)
-
-    @Provides
-    @Singleton
-    fun messageConsumerFactory(@Named("pdRequestConsumer") delegate: MessageConsumer): MessageConsumerFactory =
-        MessageConsumerFactory(delegate)
+    @Named("pdRequestConsumerFactory")
+    fun pdRequestConsumerFactory(
+        parser: JSONParser,
+        command: RunDumpProcessCommand
+    ): MessageConsumerFactory = MessageConsumerFactory(parser, command)
 
     @Provides
     @Singleton
     @Named("pdRequestBrokerSubscriber")
     fun pdRequestBrokerSubscriber(
-        factory: MessageConsumerFactory,
-        @Named("pdRequestBrokerProperties") properties: MessageBrokerProperties
-    ): MessageBrokerSubscriber = MessageBrokerSubscriber(properties, factory)
+        @Named("pdRequestBrokerProperties") properties: MessageBrokerProperties,
+        @Named("pdRequestConsumerFactory") consumerFactory: MessageConsumerFactory
+    ): MessageBrokerSubscriber = MessageBrokerSubscriber(properties, consumerFactory)
 }

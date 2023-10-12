@@ -1,4 +1,4 @@
-package pl.gleosys.postsdump.application.aop
+package pl.gleosys.postsdump.core.aop
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import org.aopalliance.intercept.MethodInterceptor

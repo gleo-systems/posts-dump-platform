@@ -4,6 +4,7 @@ import io.kotest.core.spec.style.BehaviorSpec
 import io.kotest.matchers.equals.shouldBeEqual
 import io.kotest.matchers.should
 import io.kotest.matchers.shouldBe
+import io.mockk.called
 import io.mockk.every
 import io.mockk.spyk
 import io.mockk.verify
@@ -36,16 +37,16 @@ class BucketsStorageClientTest : BehaviorSpec({
 
     given("data to be stored") {
 
-        `when`("uploading content to specified bucket storage destination") {
+        `when`("uploading content to specified bucket destination") {
             then("return success") {
                 val request = PutObjectRequest.builder()
                     .bucket(propertiesSTUB.baseLocation)
                     .key(destinationSTUB.toString())
                     .build()
 
-                val failureOpt = client.upload(destinationSTUB, contentSTUB)
+                val result = client.upload(destinationSTUB, contentSTUB)
 
-                failureOpt.isSome() shouldBe false
+                result.isRight() shouldBeEqual true
                 verify {
                     delegateSPY.putObject(
                         withArg<PutObjectRequest> { it shouldBeEqual request },
@@ -60,7 +61,7 @@ class BucketsStorageClientTest : BehaviorSpec({
 
         `when`("uploading content and receiving storage error") {
             then("return failure") {
-                val errorMsg = "Error"
+                val errorMsg = "AwsServiceException"
                 every {
                     delegateSPY.putObject(
                         any(PutObjectRequest::class),
@@ -68,17 +69,47 @@ class BucketsStorageClientTest : BehaviorSpec({
                     )
                 } throws AwsServiceException.builder().message(errorMsg).build()
 
-                val failureOpt = client.upload(destinationSTUB, contentSTUB)
+                val result = client.upload(destinationSTUB, contentSTUB)
 
-                failureOpt.should {
-                    it.isSome() shouldBeEqual true
-                    it.getOrNull()!!.message!! shouldBeEqual errorMsg
+                result.should {
+                    it.isLeft() shouldBeEqual true
+                    it.leftOrNull()!!.message!! shouldBeEqual errorMsg
                 }
             }
         }
 
-        xwhen("uploading content and passing invalid parameters") {
-            then("return failure", TODO())
+        `when`("uploading content and passing empty destination") {
+            then("return failure") {
+                val result = client.upload(Path.of(""), contentSTUB)
+
+                result.should {
+                    it.isLeft() shouldBeEqual true
+                    it.leftOrNull() should { err ->
+                        err!!.cause!!::class shouldBeEqual IllegalArgumentException::class
+                        err.message!! shouldBeEqual "Failed requirement."
+                    }
+                }
+                verify {
+                    delegateSPY.putObject(any<PutObjectRequest>(), any<RequestBody>()) wasNot called
+                }
+            }
+        }
+
+        `when`("uploading content and passing empty content") {
+            then("return failure") {
+                val result = client.upload(destinationSTUB, "".toByteArray())
+
+                result.should {
+                    it.isLeft() shouldBeEqual true
+                    it.leftOrNull() should { err ->
+                        err!!.cause!!::class shouldBeEqual IllegalArgumentException::class
+                        err.message!! shouldBeEqual "Failed requirement."
+                    }
+                }
+                verify {
+                    delegateSPY.putObject(any<PutObjectRequest>(), any<RequestBody>()) wasNot called
+                }
+            }
         }
     }
 })

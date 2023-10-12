@@ -6,7 +6,7 @@ resources dump.
 ## Tech Stack
 
 * Kotlin
-* `IN PROGRESS` Arrow
+* `IN PROGRESS` ArrowKT / FlowKT
 * Google Guice
 * RabbitMQ
 * MinIO storage / AWS SDK 2

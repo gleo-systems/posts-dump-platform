@@ -65,6 +65,15 @@ docker build -f posts-dump-backend/Dockerfile . -t dev-pd-backend
 docker run --env-file posts-dump-backend/.env --network host dev-pd-backend
 ```
 
+Exemplary event, choose from: `BUCKETS | FILE_SYSTEM`:
+
+```json
+{
+  "id": "6a674368-488c-47d2-a44e-d000477ad20e",
+  "storageType": "BUCKETS"
+}
+```
+
 ## Local Environment
 
 Spinning up local environment requires creating resources and restarting `pd-backend` service.

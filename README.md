@@ -50,7 +50,7 @@ export STORAGE_SECRET_ACCESS_KEY=minioadmin
 export STORAGE_API_URL=http://localhost:9000
 export STORAGE_BASE_LOCATION=posts
 
-export FILE_SYSTEM_BASE_DIRECTORY=dev/requests
+export FILE_SYSTEM_BASE_DIRECTORY=posts-dump-backend/build/tmp
 
 java -jar -DAPP_LOGS_DIR=./dev/logs ./posts-dump-backend/build/libs/posts-dump-backend-0.0.1-SNAPSHOT-all.jar
 ```

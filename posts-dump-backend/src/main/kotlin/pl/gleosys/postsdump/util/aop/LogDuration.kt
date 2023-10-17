@@ -1,4 +1,4 @@
-package pl.gleosys.postsdump.core.aop
+package pl.gleosys.postsdump.util.aop
 
 @Retention(AnnotationRetention.RUNTIME)
 @Target(AnnotationTarget.FUNCTION)

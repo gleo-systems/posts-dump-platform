@@ -7,8 +7,8 @@ import com.google.inject.matcher.Matchers
 import jakarta.inject.Singleton
 import pl.gleosys.postsdump.application.process.RunDumpProcess
 import pl.gleosys.postsdump.application.process.RunDumpProcessCommand
-import pl.gleosys.postsdump.core.aop.LogDuration
-import pl.gleosys.postsdump.core.aop.LogDurationInterceptor
+import pl.gleosys.postsdump.util.aop.LogDuration
+import pl.gleosys.postsdump.util.aop.LogDurationInterceptor
 
 class ApplicationModule : AbstractModule() {
     override fun configure() {

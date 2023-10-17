@@ -5,8 +5,6 @@ import com.google.inject.Provides
 import jakarta.inject.Named
 import jakarta.inject.Singleton
 import pl.gleosys.postsdump.application.process.RunDumpProcessCommand
-import pl.gleosys.postsdump.core.Failure
-import pl.gleosys.postsdump.core.InitializationError
 import pl.gleosys.postsdump.infrastructure.EnvironmentProperty
 import pl.gleosys.postsdump.infrastructure.JSONParser
 import pl.gleosys.postsdump.infrastructure.messagebroker.MessageBrokerProperty.CHANNEL_AUTOACK_PROP
@@ -15,6 +13,8 @@ import pl.gleosys.postsdump.infrastructure.messagebroker.MessageBrokerProperty.C
 import pl.gleosys.postsdump.infrastructure.messagebroker.MessageBrokerProperty.HOSTNAME_PROP
 import pl.gleosys.postsdump.infrastructure.messagebroker.MessageBrokerProperty.PASSWORD_PROP
 import pl.gleosys.postsdump.infrastructure.messagebroker.MessageBrokerProperty.USERNAME_PROP
+import pl.gleosys.postsdump.util.Failure
+import pl.gleosys.postsdump.util.InitializationError
 import java.lang.System.getenv
 
 private enum class MessageBrokerProperty(override val envName: String) : EnvironmentProperty {

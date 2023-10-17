@@ -9,11 +9,11 @@ import com.rabbitmq.client.DefaultConsumer
 import com.rabbitmq.client.Envelope
 import io.github.oshai.kotlinlogging.KotlinLogging
 import pl.gleosys.postsdump.application.process.RunDumpProcessCommand
-import pl.gleosys.postsdump.core.Failure
-import pl.gleosys.postsdump.core.Failure.FailureFactory
-import pl.gleosys.postsdump.core.Failure.InfrastructureError
-import pl.gleosys.postsdump.core.removeWhitespaceChars
 import pl.gleosys.postsdump.infrastructure.JSONParser
+import pl.gleosys.postsdump.util.Failure
+import pl.gleosys.postsdump.util.Failure.FailureFactory
+import pl.gleosys.postsdump.util.Failure.InfrastructureError
+import pl.gleosys.postsdump.util.removeWhitespaceChars
 
 private val logger = KotlinLogging.logger {}
 

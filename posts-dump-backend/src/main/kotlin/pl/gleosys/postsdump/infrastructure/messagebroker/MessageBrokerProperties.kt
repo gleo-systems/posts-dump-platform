@@ -3,7 +3,7 @@ package pl.gleosys.postsdump.infrastructure.messagebroker
 import arrow.core.Either
 import arrow.core.raise.either
 import arrow.core.raise.ensure
-import pl.gleosys.postsdump.core.Failure.ValidationError
+import pl.gleosys.postsdump.util.Failure.ValidationError
 
 data class MessageBrokerProperties private constructor(
     val username: String,
@@ -23,11 +23,11 @@ data class MessageBrokerProperties private constructor(
             channelAutoAck: Boolean
         ): Either<ValidationError, MessageBrokerProperties> {
             return either {
-                ensure(username.isNotBlank()) { ValidationError("Empty username value") }
-                ensure(password.isNotBlank()) { ValidationError("Empty password value") }
-                ensure(hostName.isNotBlank()) { ValidationError("Empty hostName value") }
-                ensure(consumerTag.isNotBlank()) { ValidationError("Empty consumerTag value") }
-                ensure(channelName.isNotBlank()) { ValidationError("Empty channelName value") }
+                ensure(username.isNotBlank()) { ValidationError(message = "Empty username value") }
+                ensure(password.isNotBlank()) { ValidationError(message = "Empty password value") }
+                ensure(hostName.isNotBlank()) { ValidationError(message = "Empty hostName value") }
+                ensure(consumerTag.isNotBlank()) { ValidationError(message = "Empty consumerTag value") }
+                ensure(channelName.isNotBlank()) { ValidationError(message = "Empty channelName value") }
                 // channelAutoACK boolean check is not needed
                 MessageBrokerProperties(
                     username,

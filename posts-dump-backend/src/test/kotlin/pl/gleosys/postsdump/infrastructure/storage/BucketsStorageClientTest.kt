@@ -84,8 +84,8 @@ class BucketsStorageClientTest : BehaviorSpec({
 
                 result.should {
                     it.isLeft() shouldBeEqual true
-                    it.leftOrNull() should { err ->
-                        err!!.cause!!::class shouldBeEqual IllegalArgumentException::class
+                    it.leftOrNull()!! should { err ->
+                        err.cause!!::class shouldBeEqual IllegalArgumentException::class
                         err.message!! shouldBeEqual "Failed requirement."
                     }
                 }
@@ -101,8 +101,8 @@ class BucketsStorageClientTest : BehaviorSpec({
 
                 result.should {
                     it.isLeft() shouldBeEqual true
-                    it.leftOrNull() should { err ->
-                        err!!.cause!!::class shouldBeEqual IllegalArgumentException::class
+                    it.leftOrNull()!! should { err ->
+                        err.cause!!::class shouldBeEqual IllegalArgumentException::class
                         err.message!! shouldBeEqual "Failed requirement."
                     }
                 }

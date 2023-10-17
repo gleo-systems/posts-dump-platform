@@ -8,8 +8,8 @@ import arrow.core.right
 import com.squareup.moshi.JsonAdapter
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.Types
-import pl.gleosys.postsdump.core.Failure
-import pl.gleosys.postsdump.core.Failure.ConversionError
+import pl.gleosys.postsdump.util.Failure
+import pl.gleosys.postsdump.util.Failure.ConversionError
 
 class JSONParser(private val delegate: Moshi) {
 

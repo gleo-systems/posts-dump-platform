@@ -8,11 +8,11 @@ import jakarta.inject.Inject
 import jakarta.inject.Named
 import pl.gleosys.postsdump.application.ports.PostsAPIClient
 import pl.gleosys.postsdump.application.ports.StorageUploader
-import pl.gleosys.postsdump.core.Failure
-import pl.gleosys.postsdump.core.Success
-import pl.gleosys.postsdump.core.aop.LogDuration
 import pl.gleosys.postsdump.domain.Event
 import pl.gleosys.postsdump.domain.Post
+import pl.gleosys.postsdump.util.Failure
+import pl.gleosys.postsdump.util.Success
+import pl.gleosys.postsdump.util.aop.LogDuration
 import java.nio.file.Path as PathJ
 
 private val logger = KotlinLogging.logger {}
@@ -27,7 +27,6 @@ open class RunDumpProcess @Inject constructor(
     @LogDuration
     open fun execute(event: Event): Either<Failure, Success> {
         logger.info { "Starting new dump process for $event" }
-
         return apiClient.getPosts()
             .map { list ->
                 list.map { post -> prepareUploadData(post, event) }

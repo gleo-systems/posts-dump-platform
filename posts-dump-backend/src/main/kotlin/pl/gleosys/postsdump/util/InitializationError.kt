@@ -1,4 +1,4 @@
-package pl.gleosys.postsdump.core
+package pl.gleosys.postsdump.util
 
 class InitializationError(
     override val cause: Throwable? = null,

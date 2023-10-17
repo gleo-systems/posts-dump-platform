@@ -6,8 +6,6 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.inject.Named
 import jakarta.inject.Singleton
 import pl.gleosys.postsdump.application.ports.StorageUploader
-import pl.gleosys.postsdump.core.Failure
-import pl.gleosys.postsdump.core.InitializationError
 import pl.gleosys.postsdump.infrastructure.EnvironmentProperty
 import pl.gleosys.postsdump.infrastructure.JSONParser
 import pl.gleosys.postsdump.infrastructure.storage.StorageProperty.ACCESS_KEY_ID_PROP
@@ -15,6 +13,8 @@ import pl.gleosys.postsdump.infrastructure.storage.StorageProperty.API_URL_PROP
 import pl.gleosys.postsdump.infrastructure.storage.StorageProperty.BASE_LOCATION_PROP
 import pl.gleosys.postsdump.infrastructure.storage.StorageProperty.REGION_PROP
 import pl.gleosys.postsdump.infrastructure.storage.StorageProperty.SECRET_ACCESS_KEY_PROP
+import pl.gleosys.postsdump.util.Failure
+import pl.gleosys.postsdump.util.InitializationError
 import software.amazon.awssdk.auth.credentials.AwsBasicCredentials
 import software.amazon.awssdk.http.urlconnection.UrlConnectionHttpClient
 import software.amazon.awssdk.regions.Region

@@ -5,5 +5,5 @@ import pl.gleosys.postsdump.core.Failure
 import pl.gleosys.postsdump.domain.DumpEvent
 
 interface DumpCommandFactory {
-    fun newRunCommand(event: DumpEvent): Either<Failure, DumpCommand>
+    fun newRunDumpCommand(event: DumpEvent): Either<Failure, DumpCommand>
 }

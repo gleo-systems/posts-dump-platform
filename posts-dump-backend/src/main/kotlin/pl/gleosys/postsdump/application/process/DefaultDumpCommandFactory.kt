@@ -18,7 +18,7 @@ class DefaultDumpCommandFactory(
     private val uploaderMap: Map<StorageType, StorageUploader>
 ) : DumpCommandFactory {
 
-    override fun newRunCommand(event: DumpEvent): Either<Failure, DumpCommand> {
+    override fun newRunDumpCommand(event: DumpEvent): Either<Failure, DumpCommand> {
         return event
             .right()
             .flatMap(::findUploader)

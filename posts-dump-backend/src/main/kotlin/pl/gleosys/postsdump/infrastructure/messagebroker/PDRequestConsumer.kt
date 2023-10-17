@@ -39,7 +39,7 @@ class PDRequestConsumer(
             .onRight { logger.debug { "Handling posts dump request for $it" } }
             .flatMap(::mapToDomain)
             .flatMap { (delivery, event) ->
-                commandFactory.newRunCommand(event)
+                commandFactory.newRunDumpCommand(event)
                     .flatMap(DumpCommand::run)
                     .map { delivery }
             }

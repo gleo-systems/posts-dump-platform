@@ -15,14 +15,12 @@ class FailureFactoryTest : BehaviorSpec({
     val exc = Exception(errorMsg, cause)
 
     given("business logic exception") {
-
         `when`("trying to convert to Failure subtype") {
             /**
              * TODO: use withData
              * @see pl.gleosys.postsdump.core.StringTest
              */
             then("return valid object") {
-
                 FailureFactory.newInstance<ApplicationError>(exc) shouldBeEqual
                     ApplicationError(errorMsg, exc)
 
@@ -39,7 +37,6 @@ class FailureFactoryTest : BehaviorSpec({
                     ConversionError(cause = e)
             }
         }
-
 
         `when`("trying to convert to Failure instance") {
             /**

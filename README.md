@@ -65,7 +65,7 @@ docker build -f posts-dump-backend/Dockerfile . -t dev-pd-backend
 docker run --env-file posts-dump-backend/.env --network host dev-pd-backend
 ```
 
-Exemplary event, choose from: `BUCKETS | FILE_SYSTEM`:
+Below example of `posts dump event` choose from: `BUCKETS | FILE_SYSTEM`:
 
 ```json
 {
@@ -76,7 +76,8 @@ Exemplary event, choose from: `BUCKETS | FILE_SYSTEM`:
 
 ## Local Environment
 
-Spinning up local environment requires creating resources and restarting `pd-backend` service.
+Spinning up local environment requires creating resources by hand and restarting `pd-backend`
+service.
 
 ```bash
 docker compose -f ./deployment/local/compose.yaml up &

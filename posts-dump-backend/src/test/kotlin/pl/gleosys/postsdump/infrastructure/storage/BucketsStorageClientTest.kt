@@ -24,7 +24,7 @@ class BucketsStorageClientTest : BehaviorSpec({
 
     val delegateSPY = spyk<S3Client>()
 
-    val client = BucketsStorageClient(propertiesSTUB, delegateSPY)
+    val client = BucketsStorageService(propertiesSTUB, delegateSPY)
 
     beforeTest {
         every {
@@ -44,7 +44,7 @@ class BucketsStorageClientTest : BehaviorSpec({
                     .key(destinationSTUB.toString())
                     .build()
 
-                val result = client.upload(destinationSTUB, contentSTUB)
+                val result = client.uploadData(destinationSTUB, contentSTUB)
 
                 result.isRight() shouldBeEqual true
                 verify {
@@ -69,7 +69,7 @@ class BucketsStorageClientTest : BehaviorSpec({
                     )
                 } throws AwsServiceException.builder().message(errorMsg).build()
 
-                val result = client.upload(destinationSTUB, contentSTUB)
+                val result = client.uploadData(destinationSTUB, contentSTUB)
 
                 result.should {
                     it.isLeft() shouldBeEqual true
@@ -80,7 +80,7 @@ class BucketsStorageClientTest : BehaviorSpec({
 
         `when`("uploading content and passing empty destination") {
             then("return failure") {
-                val result = client.upload(Path.of(""), contentSTUB)
+                val result = client.uploadData(Path.of(""), contentSTUB)
 
                 result.should {
                     it.isLeft() shouldBeEqual true
@@ -97,7 +97,7 @@ class BucketsStorageClientTest : BehaviorSpec({
 
         `when`("uploading content and passing empty content") {
             then("return failure") {
-                val result = client.upload(destinationSTUB, "".toByteArray())
+                val result = client.uploadData(destinationSTUB, "".toByteArray())
 
                 result.should {
                     it.isLeft() shouldBeEqual true

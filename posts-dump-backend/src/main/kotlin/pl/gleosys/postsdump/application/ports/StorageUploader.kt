@@ -1,8 +1,8 @@
 package pl.gleosys.postsdump.application.ports
 
 import arrow.core.Either
-import pl.gleosys.postsdump.util.Failure
-import pl.gleosys.postsdump.util.Success
+import pl.gleosys.postsdump.core.Failure
+import pl.gleosys.postsdump.core.Success
 import java.nio.file.Path
 
 interface StorageUploader {

@@ -14,9 +14,9 @@ import java.nio.file.Path
 
 private val logger = KotlinLogging.logger {}
 
-class BucketsStorageUploader(
+class FileSystemStorageUploader(
     private val parser: JSONParser,
-    private val service: StorageService
+    private val service: FileSystemService
 ) : StorageUploader {
     override fun <T> uploadFile(
         destination: Path,
@@ -36,9 +36,9 @@ class BucketsStorageUploader(
             .flatMap { (destination, content, clazz) ->
                 parser.toByteArray(content, clazz).map { Pair(destination, it) }
             }
-            .flatMap { (destination, contentBytes) ->
-                service.uploadData(destination, contentBytes)
+            .flatMap { (destination, content) ->
+                service.createFile(destination).map { Pair(it, content) }
             }
-            .onRight { logger.info { "Successfully uploaded content to destination=$destination" } }
+            .flatMap(service::writeFile)
     }
 }

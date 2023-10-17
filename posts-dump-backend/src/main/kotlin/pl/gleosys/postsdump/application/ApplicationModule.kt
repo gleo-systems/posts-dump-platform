@@ -2,13 +2,15 @@ package pl.gleosys.postsdump.application
 
 import com.google.inject.AbstractModule
 import com.google.inject.Provides
-import com.google.inject.Scopes
 import com.google.inject.matcher.Matchers
 import jakarta.inject.Singleton
-import pl.gleosys.postsdump.application.process.RunDumpProcess
-import pl.gleosys.postsdump.application.process.RunDumpProcessCommand
-import pl.gleosys.postsdump.util.aop.LogDuration
-import pl.gleosys.postsdump.util.aop.LogDurationInterceptor
+import pl.gleosys.postsdump.application.ports.DumpCommandFactory
+import pl.gleosys.postsdump.application.ports.PostsAPIClient
+import pl.gleosys.postsdump.application.ports.StorageUploader
+import pl.gleosys.postsdump.application.process.DefaultDumpCommandFactory
+import pl.gleosys.postsdump.core.aop.LogDuration
+import pl.gleosys.postsdump.core.aop.LogDurationInterceptor
+import pl.gleosys.postsdump.domain.StorageType
 
 class ApplicationModule : AbstractModule() {
     override fun configure() {
@@ -17,10 +19,12 @@ class ApplicationModule : AbstractModule() {
             Matchers.annotatedWith(LogDuration::class.java),
             LogDurationInterceptor()
         )
-        bind(RunDumpProcess::class.java).`in`(Scopes.SINGLETON)
     }
 
     @Provides
     @Singleton
-    fun runDumpProcessCommand(process: RunDumpProcess) = RunDumpProcessCommand(process)
+    fun dumpProcessCommandFactory(
+        apiClient: PostsAPIClient,
+        uploaderMap: Map<StorageType, StorageUploader>
+    ): DumpCommandFactory = DefaultDumpCommandFactory(apiClient, uploaderMap)
 }

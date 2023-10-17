@@ -1,7 +1,15 @@
 package pl.gleosys.postsdump.infrastructure.messagebroker
 
+import arrow.core.Either
+import arrow.core.Either.Companion.catch
+import arrow.core.flatMap
+import arrow.core.right
+import com.rabbitmq.client.Channel
 import com.rabbitmq.client.ConnectionFactory
 import io.github.oshai.kotlinlogging.KotlinLogging
+import pl.gleosys.postsdump.core.Failure
+import pl.gleosys.postsdump.core.Failure.FailureFactory.newInstance
+import pl.gleosys.postsdump.core.Failure.InfrastructureError
 
 private val logger = KotlinLogging.logger {}
 
@@ -9,27 +17,43 @@ class MessageBrokerSubscriber(
     private val properties: MessageBrokerProperties,
     private val consumerFactory: MessageConsumerFactory
 ) {
+
+    // TODO: add shutdown hook to manage SIGINT and close connection/channel objects
     fun run() {
-        logger.debug { "Creating subscription with $properties" }
-        val (username, password, hostName, consumerTag, channelName, autoACK) = properties
+        properties
+            .right()
+            .onRight { logger.debug { "Creating subscription with $properties" } }
+            .flatMap(::createChannel)
+            .flatMap(::consumeMessages)
+            .onRight { logger.info { "Successfully created subscription for channelName=${it.channelName} and hostName=${it.hostName}" } }
+    }
 
-        // TODO: handle exceptions
-        val channel = ConnectionFactory().apply {
-            this.username = username
-            this.username = username
-            this.password = password
-            this.host = hostName
+    private fun createChannel(properties: MessageBrokerProperties): Either<InfrastructureError, Pair<MessageBrokerProperties, Channel>> {
+        val (username, password, hostName) = properties
+        return catch {
+            ConnectionFactory().apply {
+                this.username = username
+                this.username = username
+                this.password = password
+                this.host = hostName
+            }
+                .newConnection().createChannel()
         }
-            .newConnection().createChannel()
+            .mapLeft<InfrastructureError>(::newInstance)
+            .map { Pair(properties, it) }
+    }
 
-        // TODO: add shutdown hook to manage SIGINT and close connection/channel objects
-
-        channel.basicConsume(
-            channelName,
-            autoACK,
-            consumerTag,
-            consumerFactory.newInstance(channel, autoACK)
-        )
-        logger.info { "Successfully created subscription for channelName=$channelName and hostName=$hostName" }
+    private fun consumeMessages(data: Pair<MessageBrokerProperties, Channel>): Either<Failure, MessageBrokerProperties> {
+        val (properties, channel) = data
+        return catch {
+            channel.basicConsume(
+                properties.channelName,
+                properties.channelAutoACK,
+                properties.consumerTag,
+                consumerFactory.newInstance(channel, properties.channelAutoACK)
+            )
+        }
+            .mapLeft<InfrastructureError>(::newInstance)
+            .map { properties }
     }
 }

@@ -8,11 +8,11 @@ import com.github.kittinunf.fuel.core.FuelError
 import com.github.kittinunf.result.Result
 import com.github.kittinunf.result.map
 import pl.gleosys.postsdump.application.ports.PostsAPIClient
+import pl.gleosys.postsdump.core.Failure
+import pl.gleosys.postsdump.core.Failure.FailureFactory.newInstance
+import pl.gleosys.postsdump.core.Failure.InfrastructureError
 import pl.gleosys.postsdump.domain.Post
 import pl.gleosys.postsdump.infrastructure.JSONParser
-import pl.gleosys.postsdump.util.Failure
-import pl.gleosys.postsdump.util.Failure.FailureFactory
-import pl.gleosys.postsdump.util.Failure.InfrastructureError
 
 private class JSONPlaceholderAdapter
 
@@ -27,7 +27,7 @@ class JSONPlaceholderHTTPClient(parser: JSONParser) : PostsAPIClient {
                 .third
                 .map { it.map(PostDTO::toDomain) }
         }
-            .mapLeft<InfrastructureError>(FailureFactory::newInstance)
+            .mapLeft<InfrastructureError>(::newInstance)
             .fold(::Left, Result<List<Post>, FuelError>::toEither)
     }
 }

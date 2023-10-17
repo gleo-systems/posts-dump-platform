@@ -8,7 +8,7 @@ RUN gradle clean build --no-daemon
 
 # Replace with 17-jre-alpine
 FROM amazoncorretto:17-alpine3.18
-RUN mkdir /opt/app && mkdir -p /var/app/logs
+RUN mkdir /opt/app && mkdir -p /var/app/logs && mkdir -p /var/app/storage/posts
 WORKDIR /opt/app
 COPY --from=build /tmp/app/posts-dump-backend/build/libs/posts-dump-backend-*-all.jar ./application.jar
 RUN addgroup -S app && adduser -S -G app app

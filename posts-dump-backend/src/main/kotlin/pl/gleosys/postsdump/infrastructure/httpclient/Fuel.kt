@@ -9,11 +9,11 @@ import com.github.kittinunf.fuel.core.response
 import com.github.kittinunf.fuel.moshi.moshiDeserializerOf
 import com.github.kittinunf.result.Result
 import com.squareup.moshi.JsonAdapter
-import pl.gleosys.postsdump.util.Failure
-import pl.gleosys.postsdump.util.Failure.InfrastructureError
+import pl.gleosys.postsdump.core.Failure
+import pl.gleosys.postsdump.core.Failure.InfrastructureError
 
 fun <T> Result<T, FuelError>.toEither(): Either<Failure, T> =
-    this.fold(::Right) { InfrastructureError(it).left() }
+    this.fold(::Right) { InfrastructureError(cause = it).left() }
 
 inline fun <reified T : Any> Request.responseObject(adapter: JsonAdapter<T>) =
     response(moshiDeserializerOf(adapter))

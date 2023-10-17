@@ -12,7 +12,8 @@ fun main() {
     logger.info { "Starting application server..." }
     catch {
         Guice.createInjector(MainModule())
-            .getInstance(InfrastructureInitializer::class.java).run()
+            .getInstance(InfrastructureInitializer::class.java)
+            .run()
     }
         .onRight { logger.info { "Successfully started application server" } }
         .onLeft {

@@ -23,9 +23,7 @@ class NotificationEventService(
     }
 
     private fun sendRecord(record: ProducerRecord<String, ByteArray>): Either<InfrastructureError, Success> {
-        return catch {
-            client.send(record).get()
-        }
+        return catch { client.send(record).get() }
             .mapLeft<InfrastructureError>(Failure.FailureFactory::newInstance)
             .map { Success }
     }

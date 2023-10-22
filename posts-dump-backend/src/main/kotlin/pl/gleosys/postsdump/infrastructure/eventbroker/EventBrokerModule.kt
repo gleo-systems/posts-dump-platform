@@ -19,7 +19,7 @@ import pl.gleosys.postsdump.infrastructure.eventbroker.EventBrokerProperty.NOTIF
 
 private enum class EventBrokerProperty(override val envName: String) : EnvironmentProperty {
     NOTIFICATIONS_TOPIC_NAME_PROP("EVENT_BROKER_NOTIFICATIONS_TOPIC_NAME"),
-    API_URL_PROP("EVENT_BROKER_API_URL"),
+    API_URL_PROP("EVENT_BROKER_API_URL")
 }
 
 class EventBrokerModule : AbstractModule() {

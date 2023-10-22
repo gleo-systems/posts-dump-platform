@@ -38,7 +38,6 @@ class BucketsStorageUploader(
             }
             .flatMap { (destination, contentBytes) ->
                 service.uploadData(destination, contentBytes)
-
             }
             .onRight { logger.info { "Successfully uploaded content to destination=$destination" } }
     }

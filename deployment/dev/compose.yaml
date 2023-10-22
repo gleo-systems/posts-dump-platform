@@ -5,7 +5,7 @@ services:
     container_name: "pd-requests-queue"
     image: "rabbitmq:3.12.6-management-alpine"
     volumes:
-      - "pd-requests-queue_vol:/var/lib/rabbitmq"
+      - "dev-pd-requests-queue_vol:/var/lib/rabbitmq"
     hostname: "pd-requests-queue"
     ports:
       - "5672:5672"
@@ -16,7 +16,7 @@ services:
     image: "minio/minio:RELEASE.2023-09-23T03-47-50Z"
     command: server --console-address ":9001" /data
     volumes:
-      - "pd-buckets-storage_vol:/data"
+      - "dev-pd-buckets-storage_vol:/data"
     hostname: "pd-buckets-storage"
     ports:
       - "9000:9000"
@@ -26,7 +26,7 @@ services:
     container_name: "pd-notifications"
     image: "bitnami/kafka:3.6.0-debian-11-r0"
     volumes:
-      - "pd-notifications_vol:/bitnami/kafka"
+      - "dev-pd-notifications_vol:/bitnami/kafka"
     hostname: "pd-notifications"
     ports:
       - "9092:9092"
@@ -44,19 +44,20 @@ services:
   pd-notifications-ui:
     container_name: "pd-notifications-ui"
     image: provectuslabs/kafka-ui:latest
+    hostname: "pd-notifications-ui"
     ports:
       - "9094:8080"
     environment:
       - "DYNAMIC_CONFIG_ENABLED=true"
     volumes:
-      - "pd-notifications-ui_vol:/etc/kafkaui"
+      - "dev-pd-notifications-ui_vol:/etc/kafkaui"
 
 volumes:
-  pd-requests-queue_vol:
-  pd-buckets-storage_vol:
-  pd-notifications_vol:
-  pd-notifications-ui_vol:
+  dev-pd-requests-queue_vol:
+  dev-pd-buckets-storage_vol:
+  dev-pd-notifications_vol:
+  dev-pd-notifications-ui_vol:
 
 networks:
   default:
-    name: "pd-platform_net"
+    name: "dev-pd-platform_net"

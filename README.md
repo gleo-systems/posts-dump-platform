@@ -29,10 +29,9 @@ docker compose -f ./deployment/dev/compose.yaml up &
 
 * Create RabbitMQ queue named `pd-requests` [(link)](http://localhost:15672).
 * Create Minio bucket named `posts` [(link)](http://localhost:9001).
-* Create Kafka topic `pd-requests-notification` by running following command inside the
-  container by running
-  `kafka-topics.sh --create --bootstrap-server pd-notifications:9092 --topic pd-requests-notification`.
-* Add local machine Kafka service alias:
+* Create Kafka cluster `pd-notifications` at port `9092` and
+  topic named `pd-requests-notification` [(link)](http://localhost:9094).
+* Add Kafka instance local machine address alias:
 
 ```bash 
 echo '127.0.0.1 pd-notifications' | sudo tee -a /etc/hosts
@@ -95,6 +94,9 @@ service.
 ```bash
 docker compose -f ./deployment/local/compose.yaml up &
 ```
+
+* Run command inside Kafka container:
+  `kafka-topics.sh --create --bootstrap-server pd-notifications:9092 --topic pd-requests-notification`
 
 ## Next Features
 

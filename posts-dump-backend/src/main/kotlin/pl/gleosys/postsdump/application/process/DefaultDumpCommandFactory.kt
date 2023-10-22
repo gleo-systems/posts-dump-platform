@@ -17,7 +17,7 @@ import pl.gleosys.postsdump.domain.StorageType
 class DefaultDumpCommandFactory(
     private val apiClient: PostsAPIClient,
     private val uploaderMap: Map<StorageType, StorageUploader>,
-    private val eventPublisher: NotificationEventPublisher,
+    private val eventPublisher: NotificationEventPublisher
 ) : DumpCommandFactory {
 
     override fun newRunDumpCommand(event: DumpEvent): Either<Failure, DumpCommand> {

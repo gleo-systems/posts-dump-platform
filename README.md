@@ -10,13 +10,13 @@ resources dump.
 * Google Guice
 * RabbitMQ
 * MinIO storage / AWS SDK 2
+* Apache Kafka notifications
 * Fuel HTTP client / Moshi JSON
 * Kotlin Logger / Logback
 * Kotest / Mockk / BDD
 * Gradle v8.4 (Wrapper)
 * Docker v23.0.5 / Compose v2.17.3
 * `TODO` Kubernetes
-* `TODO` Kafka
 * `TODO` Spock tests
 
 ## Run Application

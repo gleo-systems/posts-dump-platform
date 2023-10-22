@@ -36,7 +36,7 @@ class PDRequestConsumer(
     ) {
         Delivery(consumerTag, envelope, properties, body)
             .right()
-            .onRight { logger.debug { "Handling posts dump request for $it" } }
+            .onRight { logger.info { "Handling posts dump request for $it" } }
             .flatMap(::mapToDomain)
             .flatMap { (delivery, event) ->
                 commandFactory.newRunDumpCommand(event)
@@ -46,7 +46,7 @@ class PDRequestConsumer(
             .flatMap(::performACK)
             .onLeft { logger.error(it.toThrowable()) { "Error while handling posts dump request" } }
             .onRight {
-                logger.debug { "Successfully handled posts dump request with body '${String(it.body).removeWhitespaceChars()}'" }
+                logger.info { "Successfully handled posts dump request with body '${String(it.body).removeWhitespaceChars()}'" }
             }
     }
 
@@ -54,7 +54,7 @@ class PDRequestConsumer(
         return parser.fromJSON(String(delivery.body), PDRequestDTO::class.java)
             .flatMap(PDRequestDTO::toDomain)
             .onRight { event -> logger.trace { "Mapped to $event" } }
-            .map { event -> Pair(delivery, event) }
+            .map { event -> delivery to event }
     }
 
     private fun performACK(delivery: Delivery): Either<Failure, Delivery> {

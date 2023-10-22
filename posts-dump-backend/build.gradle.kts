@@ -40,6 +40,7 @@ dependencies {
     implementation(libs.awsSDKS3)
     implementation(libs.awsSDKUrlConnectionClient)
     implementation(libs.logback)
+    implementation(libs.kafkaClients)
 
     /* Tests */
     testImplementation(libs.kotestRunnerJUnit5JVM)

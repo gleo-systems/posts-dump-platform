@@ -13,6 +13,8 @@
     </appender>
 
     <logger name="software.amazon.awssdk" level="INFO"/>
+    <logger name="org.apache.kafka" level="INFO"/>
+
 
     <root level="DEBUG">
         <appender-ref ref="FILE_LOGGER"/>

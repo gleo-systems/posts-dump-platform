@@ -10,6 +10,7 @@ awsSDKVer = "2.20.153"
 logbackVer = "1.4.11"
 kotestVer = "5.7.2"
 mockkVer = "1.13.8"
+kafkaClientsVer = "3.6.0"
 
 [libraries]
 # Core
@@ -28,6 +29,7 @@ amqpClient = { module = "com.rabbitmq:amqp-client", version.ref = "amqpClientVer
 awsSDKS3 = { module = "software.amazon.awssdk:s3", version.ref = "awsSDKVer" }
 awsSDKUrlConnectionClient = { module = "software.amazon.awssdk:url-connection-client", version.ref = "awsSDKVer" }
 logback = { module = "ch.qos.logback:logback-classic", version.ref = "logbackVer" }
+kafkaClients = { module = "org.apache.kafka:kafka-clients", version.ref = "kafkaClientsVer" }
 
 # Tests
 kotestRunnerJUnit5JVM = { module = "io.kotest:kotest-runner-junit5-jvm", version.ref = "kotestVer" }

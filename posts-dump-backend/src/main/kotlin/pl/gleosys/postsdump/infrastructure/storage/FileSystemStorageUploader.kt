@@ -30,15 +30,16 @@ class FileSystemStorageUploader(
 
             Triple(destination, content, clazz)
         }
-            .onRight { (destination, content, clazz) ->
+            .onRight {
                 logger.debug { "Uploading content $content with class=${clazz.simpleName} to destination=$destination" }
             }
             .flatMap { (destination, content, clazz) ->
-                parser.toByteArray(content, clazz).map { Pair(destination, it) }
+                parser.toByteArray(content, clazz).map { destination to it }
             }
             .flatMap { (destination, content) ->
-                service.createFile(destination).map { Pair(it, content) }
+                service.createFile(destination).map { it to content }
             }
             .flatMap(service::writeFile)
+            .onRight { logger.info { "Successfully uploaded content to destination=$destination" } }
     }
 }

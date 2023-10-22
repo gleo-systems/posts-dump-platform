@@ -30,14 +30,15 @@ class BucketsStorageUploader(
 
             Triple(destination, content, clazz)
         }
-            .onRight { (destination, content, clazz) ->
+            .onRight {
                 logger.debug { "Uploading content $content with class=${clazz.simpleName} to destination=$destination" }
             }
             .flatMap { (destination, content, clazz) ->
-                parser.toByteArray(content, clazz).map { Pair(destination, it) }
+                parser.toByteArray(content, clazz).map { destination to it }
             }
             .flatMap { (destination, contentBytes) ->
                 service.uploadData(destination, contentBytes)
+
             }
             .onRight { logger.info { "Successfully uploaded content to destination=$destination" } }
     }

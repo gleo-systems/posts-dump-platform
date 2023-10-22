@@ -5,6 +5,7 @@ import com.google.inject.Provides
 import com.google.inject.matcher.Matchers
 import jakarta.inject.Singleton
 import pl.gleosys.postsdump.application.ports.DumpCommandFactory
+import pl.gleosys.postsdump.application.ports.NotificationEventPublisher
 import pl.gleosys.postsdump.application.ports.PostsAPIClient
 import pl.gleosys.postsdump.application.ports.StorageUploader
 import pl.gleosys.postsdump.application.process.DefaultDumpCommandFactory
@@ -25,6 +26,7 @@ class ApplicationModule : AbstractModule() {
     @Singleton
     fun dumpProcessCommandFactory(
         apiClient: PostsAPIClient,
-        uploaderMap: Map<StorageType, StorageUploader>
-    ): DumpCommandFactory = DefaultDumpCommandFactory(apiClient, uploaderMap)
+        uploaderMap: Map<StorageType, StorageUploader>,
+        eventPublisher: NotificationEventPublisher
+    ): DumpCommandFactory = DefaultDumpCommandFactory(apiClient, uploaderMap, eventPublisher)
 }

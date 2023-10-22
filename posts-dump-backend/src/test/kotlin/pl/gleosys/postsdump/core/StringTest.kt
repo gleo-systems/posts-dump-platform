@@ -21,10 +21,10 @@ class StringTest : BehaviorSpec({
             withData(
                 nameFn = { "Then: return '${it.second}' value for text '${it.first}'" },
                 listOf(
-                    Pair("", ""),
-                    Pair("  ", ""),
-                    Pair("a b", "ab"),
-                    Pair(" a \n  \n\n\r\r - \t\t \u000c b ", "a-b")
+                    "" to "",
+                    "  " to "",
+                    "a b" to "ab",
+                    " a \n  \n\n\r\r - \t\t \u000c b " to "a-b"
                 )
             ) {
                 val (text, expected) = it

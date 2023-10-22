@@ -13,8 +13,12 @@ import pl.gleosys.postsdump.domain.DumpEvent
 import pl.gleosys.postsdump.domain.StorageType
 import java.util.*
 
+interface PDMessage {
+    val id: UUID
+}
+
 @JsonClass(generateAdapter = true)
-data class PDRequestDTO(override val id: UUID, val storageType: String) : Message
+data class PDRequestDTO(override val id: UUID, val storageType: String) : PDMessage
 
 fun PDRequestDTO.toDomain(): Either<Failure, DumpEvent> {
     return catch { StorageType.valueOf(storageType) }

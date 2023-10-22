@@ -6,6 +6,7 @@ import com.squareup.moshi.Moshi
 import com.squareup.moshi.adapters.Rfc3339DateJsonAdapter
 import jakarta.inject.Named
 import jakarta.inject.Singleton
+import pl.gleosys.postsdump.infrastructure.eventbroker.EventBrokerModule
 import pl.gleosys.postsdump.infrastructure.httpclient.HTTPClientModule
 import pl.gleosys.postsdump.infrastructure.httpclient.UUIDJsonAdapter
 import pl.gleosys.postsdump.infrastructure.messagebroker.MessageBrokerModule
@@ -18,6 +19,7 @@ class InfrastructureModule : AbstractModule() {
         install(HTTPClientModule())
         install(StorageModule())
         install(MessageBrokerModule())
+        install(EventBrokerModule())
     }
 
     @Provides

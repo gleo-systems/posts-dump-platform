@@ -29,6 +29,16 @@ docker compose -f ./deployment/dev/compose.yaml up &
 
 * Create RabbitMQ queue named `pd-requests` [(link)](http://localhost:15672).
 * Create Minio bucket named `posts` [(link)](http://localhost:9001).
+* Create Kafka topic `pd-requests-notification` by running following command inside the
+  container by running
+  `kafka-topics.sh --create --bootstrap-server pd-notifications:9092 --topic pd-requests-notification`.
+* Add local machine Kafka service alias:
+
+```bash 
+echo '127.0.0.1 pd-notifications' | sudo tee -a /etc/hosts
+```
+
+Build and run application:
 
 ```bash
 ./gradlew clean build
@@ -51,6 +61,9 @@ export STORAGE_API_URL=http://localhost:9000
 export STORAGE_BASE_LOCATION=posts
 
 export FILE_SYSTEM_BASE_DIRECTORY=posts-dump-backend/build/tmp
+
+export EVENT_BROKER_API_URL=http://localhost:9092
+export EVENT_BROKER_NOTIFICATIONS_TOPIC_NAME=pd-requests-notification
 
 java -jar -DAPP_LOGS_DIR=./dev/logs ./posts-dump-backend/build/libs/posts-dump-backend-0.0.1-SNAPSHOT-all.jar
 ```

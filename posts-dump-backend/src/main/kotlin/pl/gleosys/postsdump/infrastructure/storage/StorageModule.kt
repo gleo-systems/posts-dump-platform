@@ -13,7 +13,7 @@ import pl.gleosys.postsdump.core.InitializationError
 import pl.gleosys.postsdump.domain.StorageType
 import pl.gleosys.postsdump.infrastructure.EnvironmentProperty
 import pl.gleosys.postsdump.infrastructure.JSONParser
-import pl.gleosys.postsdump.infrastructure.storage.FileSystemProperty.BASE_DIRECTORY
+import pl.gleosys.postsdump.infrastructure.storage.FileSystemProperty.BASE_DIRECTORY_PROP
 import pl.gleosys.postsdump.infrastructure.storage.StorageProperty.ACCESS_KEY_ID_PROP
 import pl.gleosys.postsdump.infrastructure.storage.StorageProperty.API_URL_PROP
 import pl.gleosys.postsdump.infrastructure.storage.StorageProperty.BASE_LOCATION_PROP
@@ -36,7 +36,7 @@ private enum class StorageProperty(override val envName: String) : EnvironmentPr
 }
 
 private enum class FileSystemProperty(override val envName: String) : EnvironmentProperty {
-    BASE_DIRECTORY("FILE_SYSTEM_BASE_DIRECTORY")
+    BASE_DIRECTORY_PROP("FILE_SYSTEM_BASE_DIRECTORY")
 }
 
 /**
@@ -68,7 +68,7 @@ class StorageModule : AbstractModule() {
     @Singleton
     @Named("minioServiceClient")
     fun minioServiceClient(properties: StorageProperties): S3Client {
-        logger.debug { "Creating buckets storage HTTP client with $properties" }
+        logger.info { "Creating buckets storage HTTP client with $properties" }
         val (region, accessKeyId, secretAccessKey, apiURL) = properties
         val bucketInHostnameDisabled = true
         return S3Client.builder()
@@ -100,7 +100,7 @@ class StorageModule : AbstractModule() {
     @Singleton
     fun fileSystemProperties(): FileSystemProperties =
         FileSystemProperties(
-            System.getenv(BASE_DIRECTORY.envName)
+            System.getenv(BASE_DIRECTORY_PROP.envName)
         )
             .mapLeft(Failure::toThrowable)
             .onLeft { throw InitializationError(it) }

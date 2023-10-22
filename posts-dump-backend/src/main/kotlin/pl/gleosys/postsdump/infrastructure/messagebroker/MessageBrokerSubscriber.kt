@@ -22,7 +22,7 @@ class MessageBrokerSubscriber(
     fun run() {
         properties
             .right()
-            .onRight { logger.debug { "Creating subscription with $properties" } }
+            .onRight { logger.info { "Creating subscription with $properties" } }
             .flatMap(::createChannel)
             .flatMap(::consumeMessages)
             .onRight { logger.info { "Successfully created subscription for channelName=${it.channelName} and hostName=${it.hostName}" } }
@@ -40,7 +40,7 @@ class MessageBrokerSubscriber(
                 .newConnection().createChannel()
         }
             .mapLeft<InfrastructureError>(::newInstance)
-            .map { Pair(properties, it) }
+            .map { properties to it }
     }
 
     private fun consumeMessages(data: Pair<MessageBrokerProperties, Channel>): Either<Failure, MessageBrokerProperties> {
